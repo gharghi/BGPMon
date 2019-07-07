@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block generic %}
+    <div class="app-dashboard shrink-medium">
+
+
+        <div class="grid-x expanded app-dashboard-top-nav-bar">
+            <div class="cell medium-9 small-6">
+                <button data-toggle="app-dashboard-sidebar" class="menu-icon hide-for-medium" aria-expanded="false"
+                        aria-controls="app-dashboard-sidebar"></button>
+                <a href="/" class="app-dashboard-logo">مانیتورینگ BGP</a>
+
+
+            </div>
+{#            <div class="cell medium-6 show-for-medium">#}
+{#                <div class="app-dashboard-search-bar-container">#}
+{#                    <input class="app-dashboard-search" type="search" placeholder="جستجو">#}
+{#                    <i class="app-dashboard-search-icon fa fa-search"></i>#}
+{#                </div>#}
+{#            </div>#}
+
+
+            <div class="cell medium-3 small-6 shrink app-dashboard-top-bar-actions">
+                <button onclick="window.location.href='/accounts/logout/'"
+                        class="button hollow">{% trans 'Exit' %}</button>
+
+
+            </div>
+        </div>
+        <div class="app-dashboard-body off-canvas-wrapper">
+
+            {% block sidebar %}
+                {% include 'sidebar.html' %}
+            {% endblock sidebar %}
+
+<div class="app-dashboard-body-content off-canvas-content has-reveal-{% if LANGUAGE_CODE == 'fa' %}right{% elif LANGUAGE_CODE == 'en' %}left{% endif %}" data-off-canvas-content="">
+            {% block content %}
+
+            {% endblock content %}
+</div>
+        </div>
+    </div>
+{% endblock generic %}

@@ -1,0 +1,26 @@
+{% block messages %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="callout
+            {% if 'success' in message.tags %}
+            success
+            {% elif 'error' in message.tags %}
+            alert
+            {% elif 'info' in message.tags %}
+            info
+            {% elif 'warning' in message.tags %}
+            warning
+            {% endif %}" data-closable="">
+                <button class="close-button" aria-label="Dismiss alert" type="button" data-close="" style="padding-bottom: 40px !important;">
+                    <span aria-hidden="true">x</span>
+                </button>
+
+                <p style="padding: 0 20px 0 20px;">{{ message }}</p>
+
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock messages %}
+
+
+

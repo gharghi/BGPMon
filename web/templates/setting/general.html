@@ -1,0 +1,53 @@
+{% extends 'generic.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+        {% include 'message.html' %}
+        {% block messages %}
+        {% endblock messages %}
+        <h2 class="text-center">{% trans 'Language Settings' %}</h2>
+
+        <form action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ redirect_to }}">
+        <div class="grid-x grid-margin-x">
+                        <div class="cell small-2">
+                    <label for="middle-label" class="text-right middle">{% trans 'Language' %}</label>
+                </div>
+<div class="cell small-10">
+            <select name="language">
+                {% get_current_language as LANGUAGE_CODE %}
+                {% get_available_languages as LANGUAGES %}
+                {% get_language_info_list for LANGUAGES as languages %}
+                {% for language in languages %}
+                    <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                        {{ language.name_local }} ({{ language.code }})
+                    </option>
+                {% endfor %}
+            </select>
+</div>
+        </div>
+            <div class="grid-x grid-margin-x">
+                <fieldset class="cell medium-6">
+                    <button class="button" type="submit" value="Submit">{% trans 'Submit' %}</button>
+                </fieldset>
+
+            </div>
+        </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="js-off-canvas-overlay is-overlay-absolute"></div>
+
+{% endblock content %}

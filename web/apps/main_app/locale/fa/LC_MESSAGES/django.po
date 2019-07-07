@@ -1,0 +1,486 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-16 13:40+0430\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: web/apps/main_app/validation/ip_validation.py:14
+msgid "Enter a valid IPv4 or IPv6 address."
+msgstr "لطفا یک آدرس معتبر ورژن ۴ یا ۶ وارد کنید."
+
+#: web/apps/main_app/validation/ip_validation.py:25
+msgid "Enter a valid IPv4 or IPv6 network."
+msgstr "لطفا یک رنج آدرس معتبر ورژن ۴ یا ۶ وارد کنید."
+
+#: web/apps/main_app/validation/ip_validation.py:31
+msgid "Enter a valid IPv6 address."
+msgstr "لطفا یک آدرس ورژن ۶ معتبر وارد کنید."
+
+#: web/apps/main_app/validation/ip_validation.py:39
+msgid "Enter a valid IPv4 address."
+msgstr "لطفا یک آدرس ورژن ۴ معتبر وارد کنید."
+
+#: web/apps/main_app/validation/ip_validation.py:46
+msgid "Enter a valid IPv4 network."
+msgstr "لطفا یک رنج آدرس معتبر ورژن ۴ وارد کنید."
+
+#: web/apps/main_app/validation/ip_validation.py:53
+msgid "Enter a valid IPv6 network."
+msgstr "لطفا یک رنج آدرس معتبر ورژن ۶ وارد کنید."
+
+#: web/apps/main_app/views/add_prefix.py:43
+#: web/apps/main_app/views/add_prefix.py:190
+msgid "Prefix(s) added successfully"
+msgstr "آدرسها با موفقیت اضافه شدند"
+
+#: web/apps/main_app/views/add_prefix.py:63
+msgid "Please enter a valid prefix"
+msgstr "لطفا یک آدرس صحیح وارد کنید"
+
+#: web/apps/main_app/views/add_prefix.py:86
+#: web/apps/main_app/views/add_prefix.py:128
+#, fuzzy
+#| msgid "Found route objects"
+msgid "There is no route object"
+msgstr "route object های یافت شده."
+
+#: web/apps/main_app/views/add_prefix.py:108
+#, fuzzy
+#| msgid "Notification Rule Edited successfully"
+msgid "Prefix deleted successfully"
+msgstr "تنظیمات اطلاع رسانی با موفقیت به روز شد"
+
+#: web/apps/main_app/views/add_prefix.py:148
+msgid "There is no originator"
+msgstr "هیچ originatior وجود ندارد"
+
+#: web/apps/main_app/views/asn.py:24
+msgid "Please enter a valid AS Number"
+msgstr "لطفا یک شماره AS معتبر وارد کنید"
+
+#: web/apps/main_app/views/asn.py:32
+#, fuzzy
+#| msgid "Notification Rule Edited successfully"
+msgid "AS Number added successfully"
+msgstr "تنظیمات اطلاع رسانی با موفقیت به روز شد"
+
+#: web/apps/main_app/views/asn.py:50
+#, fuzzy
+#| msgid "Notification Rule Edited successfully"
+msgid "AS Number deleted successfully"
+msgstr "تنظیمات اطلاع رسانی با موفقیت به روز شد"
+
+#: web/apps/main_app/views/asn.py:72
+msgid "There is no neighbors"
+msgstr "هیج neighbor وجود ندارد"
+
+#: web/apps/main_app/views/asn_policy.py:44
+#, fuzzy
+#| msgid "Notification Rule Edited successfully"
+msgid "Neighbors have registered successfully"
+msgstr "تنظیمات اطلاع رسانی با موفقیت به روز شد"
+
+#: web/apps/main_app/views/asn_policy.py:70
+#, fuzzy
+#| msgid "Notification Rule Edited successfully"
+msgid "Neighbor deleted successfully"
+msgstr "تنظیمات اطلاع رسانی با موفقیت به روز شد"
+
+#: web/apps/main_app/views/asn_policy.py:74
+msgid "There is an error"
+msgstr "خطایی رخ داده است"
+
+#: web/apps/main_app/views/asn_policy.py:86
+msgid "This AS has no prefix"
+msgstr "این AS هیچ آدرسی ندارد"
+
+#: web/apps/main_app/views/notification_rules.py:36
+#: web/apps/main_app/views/notification_rules.py:43
+msgid "Notification Rule Edited successfully"
+msgstr "تنظیمات اطلاع رسانی با موفقیت به روز شد"
+
+#: web/apps/main_app/views/notification_rules.py:47
+msgid "something is wrong"
+msgstr "مشکلی پیش آمده"
+
+#: web/apps/main_app/views/prefix_policy.py:43
+#, fuzzy
+#| msgid "Notification Rule Edited successfully"
+msgid "Origins have registered successfully"
+msgstr "تنظیمات اطلاع رسانی با موفقیت به روز شد"
+
+#: web/apps/main_app/views/prefix_policy.py:63
+msgid "There is no result"
+msgstr "هیچ نتیجه ای یافت نشد"
+
+#: web/apps/main_app/views/prefix_policy.py:74
+#, fuzzy
+#| msgid "Notification Rule Edited successfully"
+msgid "Originate ASN deleted successfully"
+msgstr "تنظیمات اطلاع رسانی با موفقیت به روز شد"
+
+#: web/apps/main_app/views/signup.py:42
+msgid "Account activation sent. Please check your email for confirmation link."
+msgstr "ایمیل حاوی لینک فعالسازی ارسال گردید. لطفا ایمیل خود را چک کنید."
+
+#: web/apps/main_app/views/signup.py:70
+msgid "Your Account has been activated. Please login to continue."
+msgstr "حساب کاربری شما فعال شد. لطفا وارد شوید."
+
+#: web/apps/main_app/views/signup.py:73
+msgid "There was a problem in activation, please try again"
+msgstr "در فعالسازی مشکلی پیش آمده است. لطفا مجددا تلاش کنید."
+
+#: web/settings/production.py:125
+msgid "Persian"
+msgstr "فارسی"
+
+#: web/settings/production.py:126
+msgid "English"
+msgstr "انگلیسی"
+
+#: web/templates/add_prefix/add_prefix.html:15
+msgid "Add Prefix"
+msgstr " آدرسها"
+
+#: web/templates/add_prefix/add_prefix.html:20
+#: web/templates/add_prefix/add_prefix.html:49
+#: web/templates/notifications/list_notifications.html:19
+msgid "Prefix"
+msgstr "رنج آدرس"
+
+#: web/templates/add_prefix/add_prefix.html:24
+msgid "Example: 193.0.0.0/24"
+msgstr "نمونه: 193.0.0.0/24"
+
+#: web/templates/add_prefix/add_prefix.html:37
+#: web/templates/add_prefix/make_policy.html:36
+#: web/templates/add_prefix/prefix_policy.html:52
+#: web/templates/asn/neighbors.html:59
+msgid "Continue"
+msgstr "ادامه"
+
+#: web/templates/add_prefix/add_prefix.html:44
+msgid "List of Prefixes"
+msgstr "لیست آدرس ها"
+
+#: web/templates/add_prefix/add_prefix.html:50
+#: web/templates/add_prefix/list_origins.html:22 web/templates/asn/asn.html:42
+#: web/templates/asn/list_neighbors.html:23
+msgid "Actions"
+msgstr "عملیات"
+
+#: web/templates/add_prefix/add_prefix.html:61
+#: web/templates/add_prefix/list_origins.html:33 web/templates/asn/asn.html:53
+#: web/templates/asn/list_neighbors.html:36
+msgid "Delete"
+msgstr "حذف"
+
+#: web/templates/add_prefix/add_prefix.html:64
+#: web/templates/add_prefix/make_policy.html:15 web/templates/asn/asn.html:56
+#: web/templates/asn/list_prefixes.html:15 web/templates/asn/neighbors.html:15
+msgid "Make Policy"
+msgstr "ایجاد قوانین"
+
+#: web/templates/add_prefix/add_prefix.html:67
+msgid "Origins"
+msgstr ""
+
+#: web/templates/add_prefix/list_origins.html:16
+msgid "Origins of "
+msgstr "بهره بردار"
+
+#: web/templates/add_prefix/list_origins.html:21
+msgid "Origin"
+msgstr ""
+
+#: web/templates/add_prefix/make_policy.html:21
+msgid "Found route objects"
+msgstr "route object های یافت شده."
+
+#: web/templates/add_prefix/make_policy.html:32
+#: web/templates/add_prefix/prefix_policy.html:48
+#: web/templates/asn/list_prefixes.html:39 web/templates/asn/neighbors.html:54
+msgid "Select All"
+msgstr "انتخاب همه"
+
+#: web/templates/add_prefix/prefix_policy.html:15
+#, fuzzy
+#| msgid "Make Policy"
+msgid "Make Prefix Policy"
+msgstr "ایجاد قوانین"
+
+#: web/templates/add_prefix/prefix_policy.html:23
+msgid "Originators with route object"
+msgstr "اطلاعات بدست آمده از دیتابیس ها"
+
+#: web/templates/add_prefix/prefix_policy.html:37
+msgid "Originators found in BGP"
+msgstr "اطلاعات بدست آمده از رووتینگ اینترنت"
+
+#: web/templates/asn/asn.html:15
+msgid "Add Asn"
+msgstr "افزودن شماره AS"
+
+#: web/templates/asn/asn.html:20
+msgid "Asn"
+msgstr "شماره AS"
+
+#: web/templates/asn/asn.html:24
+msgid "Example: AS3333"
+msgstr "نمونه: AS3333"
+
+#: web/templates/asn/asn.html:29
+msgid "Add"
+msgstr "افزودن"
+
+#: web/templates/asn/asn.html:36 web/templates/asn/list_neighbors.html:15
+msgid "List of Asns"
+msgstr "لیست شماره های AS"
+
+#: web/templates/asn/asn.html:41 web/templates/asn/list_neighbors.html:20
+msgid "AS Number"
+msgstr "شماره AS"
+
+#: web/templates/asn/asn.html:59
+msgid "List neighbors"
+msgstr "لیست neighbor ها"
+
+#: web/templates/asn/asn.html:62
+#, fuzzy
+#| msgid "List of Prefixes"
+msgid "List Prefixes"
+msgstr "لیست آدرس ها"
+
+#: web/templates/asn/list_neighbors.html:21
+msgid "Left"
+msgstr "سرویس دهنده"
+
+#: web/templates/asn/list_neighbors.html:22
+msgid "Right"
+msgstr "سرویس گیرنده"
+
+#: web/templates/asn/list_prefixes.html:24
+msgid "Detected prefixes"
+msgstr "آدرس های یافت شده"
+
+#: web/templates/asn/list_prefixes.html:44
+msgid "Save"
+msgstr "ذخیره"
+
+#: web/templates/asn/neighbors.html:24
+msgid "AS Number of Service Providers"
+msgstr "شماره AS سرویس دهنده"
+
+#: web/templates/asn/neighbors.html:39
+msgid "AS Number of Customers"
+msgstr "شماره AS سرویس گیرنده"
+
+#: web/templates/generic.html:25
+msgid "Exit"
+msgstr "خروج"
+
+#: web/templates/index.html:25 web/templates/sidebar.html:26
+msgid "ASNs"
+msgstr "شماره های AS"
+
+#: web/templates/index.html:43 web/templates/sidebar.html:23
+#, fuzzy
+#| msgid "Prefix"
+msgid "Prefixes"
+msgstr "رنج آدرس"
+
+#: web/templates/index.html:61 web/templates/sidebar.html:29
+msgid "Notifications"
+msgstr "اعلان ها"
+
+#: web/templates/notifications/list_notifications.html:14
+msgid "List of Notifications"
+msgstr "لیست اعلان ها"
+
+#: web/templates/notifications/list_notifications.html:20
+#, fuzzy
+#| msgid "Origins of "
+msgid "Originator"
+msgstr "بهره بردار"
+
+#: web/templates/notifications/list_notifications.html:21
+msgid "Path"
+msgstr "مسیر"
+
+#: web/templates/notifications/list_notifications.html:22
+msgid "Type"
+msgstr "نوع"
+
+#: web/templates/notifications/list_notifications.html:23
+msgid "Time"
+msgstr "زمان"
+
+#: web/templates/notifications/view_rules.html:9 web/templates/sidebar.html:32
+msgid "Notification Rules"
+msgstr "قوانین اعلان ها"
+
+#: web/templates/notifications/view_rules.html:19
+msgid "Telephone Number"
+msgstr "شماره موبایل"
+
+#: web/templates/notifications/view_rules.html:22
+msgid "+989121118877"
+msgstr ""
+
+#: web/templates/notifications/view_rules.html:28
+msgid "Email Address"
+msgstr "آدرس ایمیل"
+
+#: web/templates/notifications/view_rules.html:31
+msgid "name@company.com"
+msgstr ""
+
+#: web/templates/notifications/view_rules.html:38
+msgid "Telegram ID"
+msgstr "شناسه تلگرام"
+
+#: web/templates/notifications/view_rules.html:41
+msgid "@your_id"
+msgstr ""
+
+#: web/templates/notifications/view_rules.html:48
+msgid "Alert Transited"
+msgstr "خطای ترانزیت شدن AS شما"
+
+#: web/templates/notifications/view_rules.html:59
+msgid "Alert Transiting"
+msgstr "خطای ترانزیت کردن AS شما"
+
+#: web/templates/notifications/view_rules.html:70
+msgid "Alert Hijacked"
+msgstr "خطای سرقت رفتن آدرس شما"
+
+#: web/templates/notifications/view_rules.html:81
+msgid "Alert Hijacking"
+msgstr "خطای سرقت توسط شما"
+
+#: web/templates/notifications/view_rules.html:93
+msgid "Edit"
+msgstr "ویرایش"
+
+#: web/templates/registration/login.html:10
+#: web/templates/registration/password_reset_done.html:9
+#: web/templates/registration/password_reset_form.html:9
+msgid "Login/SignUp"
+msgstr "ورود/ثبت نام"
+
+#: web/templates/registration/login.html:45
+#: web/templates/registration/login.html:66
+#: web/templates/registration/password_reset_done.html:38
+msgid "Login"
+msgstr "ورود"
+
+#: web/templates/registration/login.html:47
+#: web/templates/registration/login.html:96
+msgid "Register"
+msgstr "ثبت نام"
+
+#: web/templates/registration/login.html:54
+#: web/templates/registration/login.html:80
+msgid "Username"
+msgstr "نام کاربری"
+
+#: web/templates/registration/login.html:58
+#: web/templates/registration/login.html:84
+msgid "Password"
+msgstr "رمز عبور"
+
+#: web/templates/registration/login.html:63
+msgid "`Remember me"
+msgstr "مرا به یاد داشته باش"
+
+#: web/templates/registration/login.html:71
+msgid "Forgot password?"
+msgstr "رمز عبور را فراموش کردم"
+
+#: web/templates/registration/login.html:88
+msgid "Confirm Password"
+msgstr "تایید رمز عبور"
+
+#: web/templates/registration/login.html:92
+#: web/templates/registration/password_reset_form.html:39
+msgid "Email"
+msgstr "ایمیل"
+
+#: web/templates/registration/password_reset_done.html:30
+#: web/templates/registration/password_reset_form.html:30
+msgid "Reset Password"
+msgstr "بازیابی رمز عبور"
+
+#: web/templates/registration/password_reset_done.html:35
+msgid ""
+"We've emailed you instructions for setting your password. If they haven't "
+"arrived in a few minutes, check your spam folder."
+msgstr ""
+"ایمیلی حاوی راهنمای بازیابی رمز عبور ارسال شد. اگر ایمیل را دریافت نکردید "
+"لطفا پوشه spam را نیز کنترل فرمایید."
+
+#: web/templates/registration/password_reset_form.html:27
+msgid "Your username and password didn't match. Please try again."
+msgstr "نام کاربری یا رمز عبور اشتباه است"
+
+#: web/templates/registration/password_reset_form.html:51
+msgid "Reset"
+msgstr "بازیابی"
+
+#: web/templates/setting/general.html:9
+msgid "Language Settings"
+msgstr "تنظیمات زبان"
+
+#: web/templates/setting/general.html:16
+msgid "Language"
+msgstr "زبان"
+
+#: web/templates/setting/general.html:33
+msgid "Submit"
+msgstr "ثبت"
+
+#: web/templates/sidebar.html:8
+msgid "Quick Access"
+msgstr "دسترسی سریع"
+
+#: web/templates/sidebar.html:35
+msgid "Setting"
+msgstr "تنظیمات"
+
+#~ msgid "Dashboard"
+#~ msgstr "پیشخوان"
+
+#~ msgid "AddPrefix"
+#~ msgstr "افزودن رنج آدرس"
+
+#~ msgid "AddAsn"
+#~ msgstr "شماره AS"
+
+#~ msgid "ASN"
+#~ msgstr "شماره AS"
+
+#, fuzzy
+#~| msgid "welcome"
+#~ msgid "Welcome"
+#~ msgstr "خوش آمدید"
+
+#, fuzzy
+#~| msgid "search"
+#~ msgid "Search"
+#~ msgstr "جستجو"

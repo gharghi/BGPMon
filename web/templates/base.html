@@ -1,0 +1,45 @@
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<html class="" lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'fa' %}rtl{% elif  LANGUAGE_CODE == 'en'%}ltr{% endif %}" data-whatinput="mouse" data-whatintent="mouse"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+ <link href="{% static 'css/all.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/foundation.css' %}">
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <script src="{% static 'js/vendor/jquery.js' %}"></script>
+<script src="{% static 'js/vendor/what-input.js' %}"></script>
+<script src="{% static 'js/vendor/foundation.js' %}"></script>
+<script src="{% static 'js/app.js' %}"></script>
+
+  <meta class="foundation-mq"></head>
+  <body>
+    {% block generic %}
+
+{% endblock generic %}
+
+
+
+<div class="reveal-overlay"><div class="reveal" id="exampleModal1" data-reveal="o5slae-reveal" role="dialog" aria-hidden="true" data-yeti-box="exampleModal1" data-resize="exampleModal1" data-events="resize" style="top: 79px;">
+        <h1>عنوان لایت باکس</h1>
+        <p class="lead">عنوان لید</p>
+        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
+        <button class="close-button" data-close="" aria-label="Close reveal" type="button">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+</div>
+
+<script src="{% static 'js/scripts.js' %}"></script>
+</body></html>
+
+
+
+
+
+
+

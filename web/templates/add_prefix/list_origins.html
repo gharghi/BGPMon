@@ -1,0 +1,43 @@
+{% extends 'generic.html' %}
+
+
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+
+
+        {% include 'message.html' %}
+        {% block messages %}
+        {% endblock messages %}
+
+
+
+        <h2 class="text-center">{% trans 'Origins of ' %}{{ prefix }}</h2>
+
+        <table>
+            <thead>
+            <tr>
+                <th width="200">{% trans 'Origin' %}</th>
+                <th width="200">{% trans 'Actions' %}</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for orig in origins %}
+                <tr>
+                    <td>{{ orig.origin }}</td>
+                    <td>
+                        <p><a href="/prefix/{{ orig.id }}/origin/delete/" data-open="exampleModal1"
+                              aria-controls="exampleModal1"
+                              aria-haspopup="true" tabindex="0">{% trans 'Delete' %}</a>
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="js-off-canvas-overlay is-overlay-absolute"></div>
+
+{% endblock content %}

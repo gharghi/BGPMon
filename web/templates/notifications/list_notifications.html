@@ -1,0 +1,44 @@
+{% extends 'generic.html' %}
+
+
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+        {% include 'message.html' %}
+        {% block messages %}
+        {% endblock messages %}
+
+
+
+        <h2 class="text-center">{% trans 'List of Notifications' %}</h2>
+
+        <table>
+            <thead>
+            <tr>
+                <th width="150">{% trans 'Prefix' %}</th>
+                <th width="100">{% trans 'Originator' %}</th>
+                <th width="300">{% trans 'Path' %}</th>
+                <th width="150">{% trans 'Type' %}</th>
+                <th width="200">{% trans 'Time' %}</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for notification in notifications %}
+                <tr>
+                    <td>{{ notification.prefix }}</td>
+                    <td>{{ notification.asn }}</td>
+                    <td>{{ notification.path }}</td>
+                    <td>{{ notification.type|status }}</td>
+                    <td>{{ notification.time|to_date }}</td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="js-off-canvas-overlay is-overlay-absolute"></div>
+
+{% endblock content %}

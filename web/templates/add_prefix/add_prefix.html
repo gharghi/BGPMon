@@ -1,0 +1,76 @@
+{% extends 'generic.html' %}
+
+
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+
+
+        {% include 'message.html' %}
+        {% block messages %}
+        {% endblock messages %}
+
+
+        <h2 class="text-center">{% trans 'Add Prefix' %}</h2>
+        <form data-abide="aqyk5r-abide" novalidate="" method="POST">
+            {% csrf_token %}
+            <div class="grid-x grid-margin-x">
+                <div class="cell small-3">
+                    <label for="middle-label" class="text-right middle">{% trans 'Prefix' %}</label>
+                </div>
+                <div class="cell small-9">
+                    <input type="text" name="prefix" id="middle-label"
+                           placeholder="{% trans 'Example: 193.0.0.0/24' %}">
+                </div>
+            </div>
+{#            <div class="grid-x grid-margin-x">#}
+{#                <div class="cell small-3">#}
+{#                    <label for="middle-label" class="text-right middle">{% trans 'ASN' %}</label>#}
+{#                </div>#}
+{#                <div class="cell small-9">#}
+{#                    <input type="text" name="asn" id="middle-label" placeholder="{% trans 'Example: AS3333' %}">#}
+{#                </div>#}
+{#            </div>#}
+            <div class="grid-x grid-margin-x">
+                <fieldset class="cell medium-6">
+                    <button class="button" type="submit" value="Submit">{% trans 'Continue' %}</button>
+                </fieldset>
+
+            </div>
+        </form>
+
+
+            <h2 class="text-center">{% trans 'List of Prefixes' %}</h2>
+
+        <table>
+            <thead>
+            <tr>
+                <th width="300">{% trans 'Prefix' %}</th>
+                <th width="400">{% trans 'Actions' %}</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for item in prefixes %}
+                <tr>
+                    <td>{{ item.prefix }}</td>
+                    <td>
+                        <p><a href="/prefix/{{ item.id }}/delete" data-open="exampleModal1" aria-controls="exampleModal1"
+                              aria-haspopup="true" tabindex="0">{% trans 'Delete' %}</a>
+                            |
+                        <a href="/prefix/{{ item.id }}/policy" data-open="exampleModal1" aria-controls="exampleModal1"
+                              aria-haspopup="true" tabindex="0">{% trans 'Make Policy' %}</a>
+                        |
+                        <a href="/prefix/{{ item.id }}/origins" data-open="exampleModal1" aria-controls="exampleModal1"
+                              aria-haspopup="true" tabindex="0">{% trans 'Origins' %}</a></p>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="js-off-canvas-overlay is-overlay-absolute"></div>
+
+{% endblock content %}

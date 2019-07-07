@@ -1,0 +1,40 @@
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% block sidebar %}
+<div id="app-dashboard-sidebar" class="app-dashboard-sidebar position-{% if LANGUAGE_CODE == 'fa' %}right{% elif LANGUAGE_CODE == 'en' %}left{% endif %} off-canvas off-canvas-absolute reveal-for-medium is-transition-push" data-off-canvas="d9zntc-off-canvas" aria-hidden="false">
+      <div class="app-dashboard-sidebar-title-area">
+        <div class="app-dashboard-close-sidebar">
+          <h3 class="app-dashboard-sidebar-block-title">{% trans 'Quick Access' %}</h3>
+          <!-- Close button -->
+          <button id="close-sidebar" data-app-dashboard-toggle-shrink="" class="app-dashboard-sidebar-close-button show-for-medium" aria-label="Close menu" type="button">
+            <span aria-hidden="true"><a href="#"><i class="fas fa-angle-double-left"></i></a></span>
+          </button>
+        </div>
+        <div class="app-dashboard-open-sidebar">
+          <button id="open-sidebar" data-app-dashboard-toggle-shrink="" class="app-dashboard-open-sidebar-button show-for-medium" aria-label="open menu" type="button">
+            <span aria-hidden="true"><a href="#"><i class="fas fa-angle-double-left"></i></a></span>
+          </button>
+        </div>
+      </div>
+      <div class="app-dashboard-sidebar-inner">
+        <ul class="menu vertical">
+          <li><a href="/prefix/add/" class="is-active">
+            <i class="large fa fa-check-square"></i><span class="app-dashboard-sidebar-text">{% trans "Prefixes" %}</span>
+          </a></li>
+          <li><a href="/asn/">
+            <i class="large fa fa-chess-rook"></i><span class="app-dashboard-sidebar-text">{% trans "ASNs" %}</span>
+          </a></li>
+          <li><a href="/notifications/">
+            <i class="large fa fa-bell"></i><span class="app-dashboard-sidebar-text">{% trans "Notifications" %}</span>
+          </a></li>
+          <li><a href="/notifications/rules/" class="is-active">
+            <i class="large fa fa-balance-scale"></i><span class="app-dashboard-sidebar-text">{% trans "Notification Rules" %}</span>
+          </a></li>
+             <li><a href="/setting/" >
+            <i class="large fa fa-cog"></i><span class="app-dashboard-sidebar-text">{% trans "Setting" %}</span>
+          </a></li>
+        </ul>
+      </div>
+    </div>
+{% endblock sidebar %}

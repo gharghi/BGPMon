@@ -1,0 +1,446 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-16 13:40+0430\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: web/apps/main_app/validation/ip_validation.py:14
+msgid "Enter a valid IPv4 or IPv6 address."
+msgstr ""
+
+#: web/apps/main_app/validation/ip_validation.py:25
+msgid "Enter a valid IPv4 or IPv6 network."
+msgstr ""
+
+#: web/apps/main_app/validation/ip_validation.py:31
+msgid "Enter a valid IPv6 address."
+msgstr ""
+
+#: web/apps/main_app/validation/ip_validation.py:39
+msgid "Enter a valid IPv4 address."
+msgstr ""
+
+#: web/apps/main_app/validation/ip_validation.py:46
+msgid "Enter a valid IPv4 network."
+msgstr ""
+
+#: web/apps/main_app/validation/ip_validation.py:53
+msgid "Enter a valid IPv6 network."
+msgstr ""
+
+#: web/apps/main_app/views/add_prefix.py:43
+#: web/apps/main_app/views/add_prefix.py:190
+msgid "Prefix(s) added successfully"
+msgstr ""
+
+#: web/apps/main_app/views/add_prefix.py:63
+msgid "Please enter a valid prefix"
+msgstr ""
+
+#: web/apps/main_app/views/add_prefix.py:86
+#: web/apps/main_app/views/add_prefix.py:128
+msgid "There is no route object"
+msgstr ""
+
+#: web/apps/main_app/views/add_prefix.py:108
+msgid "Prefix deleted successfully"
+msgstr ""
+
+#: web/apps/main_app/views/add_prefix.py:148
+msgid "There is no originator"
+msgstr ""
+
+#: web/apps/main_app/views/asn.py:24
+msgid "Please enter a valid AS Number"
+msgstr ""
+
+#: web/apps/main_app/views/asn.py:32
+msgid "AS Number added successfully"
+msgstr ""
+
+#: web/apps/main_app/views/asn.py:50
+msgid "AS Number deleted successfully"
+msgstr ""
+
+#: web/apps/main_app/views/asn.py:72
+msgid "There is no neighbors"
+msgstr ""
+
+#: web/apps/main_app/views/asn_policy.py:44
+msgid "Neighbors have registered successfully"
+msgstr ""
+
+#: web/apps/main_app/views/asn_policy.py:70
+msgid "Neighbor deleted successfully"
+msgstr ""
+
+#: web/apps/main_app/views/asn_policy.py:74
+msgid "There is an error"
+msgstr ""
+
+#: web/apps/main_app/views/asn_policy.py:86
+msgid "This AS has no prefix"
+msgstr ""
+
+#: web/apps/main_app/views/notification_rules.py:36
+#: web/apps/main_app/views/notification_rules.py:43
+msgid "Notification Rule Edited successfully"
+msgstr ""
+
+#: web/apps/main_app/views/notification_rules.py:47
+msgid "something is wrong"
+msgstr ""
+
+#: web/apps/main_app/views/prefix_policy.py:43
+msgid "Origins have registered successfully"
+msgstr ""
+
+#: web/apps/main_app/views/prefix_policy.py:63
+msgid "There is no result"
+msgstr ""
+
+#: web/apps/main_app/views/prefix_policy.py:74
+msgid "Originate ASN deleted successfully"
+msgstr ""
+
+#: web/apps/main_app/views/signup.py:42
+msgid "Account activation sent. Please check your email for confirmation link."
+msgstr ""
+
+#: web/apps/main_app/views/signup.py:70
+msgid "Your Account has been activated. Please login to continue."
+msgstr ""
+
+#: web/apps/main_app/views/signup.py:73
+msgid "There was a problem in activation, please try again"
+msgstr ""
+
+#: web/settings/production.py:125
+msgid "Persian"
+msgstr ""
+
+#: web/settings/production.py:126
+msgid "English"
+msgstr ""
+
+#: web/templates/add_prefix/add_prefix.html:15
+msgid "Add Prefix"
+msgstr ""
+
+#: web/templates/add_prefix/add_prefix.html:20
+#: web/templates/add_prefix/add_prefix.html:49
+#: web/templates/notifications/list_notifications.html:19
+msgid "Prefix"
+msgstr ""
+
+#: web/templates/add_prefix/add_prefix.html:24
+msgid "Example: 193.0.0.0/24"
+msgstr ""
+
+#: web/templates/add_prefix/add_prefix.html:37
+#: web/templates/add_prefix/make_policy.html:36
+#: web/templates/add_prefix/prefix_policy.html:52
+#: web/templates/asn/neighbors.html:59
+msgid "Continue"
+msgstr ""
+
+#: web/templates/add_prefix/add_prefix.html:44
+msgid "List of Prefixes"
+msgstr ""
+
+#: web/templates/add_prefix/add_prefix.html:50
+#: web/templates/add_prefix/list_origins.html:22 web/templates/asn/asn.html:42
+#: web/templates/asn/list_neighbors.html:23
+msgid "Actions"
+msgstr ""
+
+#: web/templates/add_prefix/add_prefix.html:61
+#: web/templates/add_prefix/list_origins.html:33 web/templates/asn/asn.html:53
+#: web/templates/asn/list_neighbors.html:36
+msgid "Delete"
+msgstr ""
+
+#: web/templates/add_prefix/add_prefix.html:64
+#: web/templates/add_prefix/make_policy.html:15 web/templates/asn/asn.html:56
+#: web/templates/asn/list_prefixes.html:15 web/templates/asn/neighbors.html:15
+msgid "Make Policy"
+msgstr ""
+
+#: web/templates/add_prefix/add_prefix.html:67
+msgid "Origins"
+msgstr ""
+
+#: web/templates/add_prefix/list_origins.html:16
+msgid "Origins of "
+msgstr ""
+
+#: web/templates/add_prefix/list_origins.html:21
+msgid "Origin"
+msgstr ""
+
+#: web/templates/add_prefix/make_policy.html:21
+msgid "Found route objects"
+msgstr ""
+
+#: web/templates/add_prefix/make_policy.html:32
+#: web/templates/add_prefix/prefix_policy.html:48
+#: web/templates/asn/list_prefixes.html:39 web/templates/asn/neighbors.html:54
+msgid "Select All"
+msgstr ""
+
+#: web/templates/add_prefix/prefix_policy.html:15
+msgid "Make Prefix Policy"
+msgstr ""
+
+#: web/templates/add_prefix/prefix_policy.html:23
+msgid "Originators with route object"
+msgstr ""
+
+#: web/templates/add_prefix/prefix_policy.html:37
+msgid "Originators found in BGP"
+msgstr ""
+
+#: web/templates/asn/asn.html:15
+msgid "Add Asn"
+msgstr ""
+
+#: web/templates/asn/asn.html:20
+msgid "Asn"
+msgstr ""
+
+#: web/templates/asn/asn.html:24
+msgid "Example: AS3333"
+msgstr ""
+
+#: web/templates/asn/asn.html:29
+msgid "Add"
+msgstr ""
+
+#: web/templates/asn/asn.html:36 web/templates/asn/list_neighbors.html:15
+msgid "List of Asns"
+msgstr ""
+
+#: web/templates/asn/asn.html:41 web/templates/asn/list_neighbors.html:20
+msgid "AS Number"
+msgstr ""
+
+#: web/templates/asn/asn.html:59
+msgid "List neighbors"
+msgstr ""
+
+#: web/templates/asn/asn.html:62
+msgid "List Prefixes"
+msgstr ""
+
+#: web/templates/asn/list_neighbors.html:21
+msgid "Left"
+msgstr ""
+
+#: web/templates/asn/list_neighbors.html:22
+msgid "Right"
+msgstr ""
+
+#: web/templates/asn/list_prefixes.html:24
+msgid "Detected prefixes"
+msgstr ""
+
+#: web/templates/asn/list_prefixes.html:44
+msgid "Save"
+msgstr ""
+
+#: web/templates/asn/neighbors.html:24
+msgid "AS Number of Service Providers"
+msgstr ""
+
+#: web/templates/asn/neighbors.html:39
+msgid "AS Number of Customers"
+msgstr ""
+
+#: web/templates/generic.html:25
+msgid "Exit"
+msgstr "Exit"
+
+#: web/templates/index.html:25 web/templates/sidebar.html:26
+msgid "ASNs"
+msgstr ""
+
+#: web/templates/index.html:43 web/templates/sidebar.html:23
+msgid "Prefixes"
+msgstr ""
+
+#: web/templates/index.html:61 web/templates/sidebar.html:29
+msgid "Notifications"
+msgstr ""
+
+#: web/templates/notifications/list_notifications.html:14
+msgid "List of Notifications"
+msgstr ""
+
+#: web/templates/notifications/list_notifications.html:20
+msgid "Originator"
+msgstr ""
+
+#: web/templates/notifications/list_notifications.html:21
+msgid "Path"
+msgstr ""
+
+#: web/templates/notifications/list_notifications.html:22
+msgid "Type"
+msgstr ""
+
+#: web/templates/notifications/list_notifications.html:23
+msgid "Time"
+msgstr ""
+
+#: web/templates/notifications/view_rules.html:9 web/templates/sidebar.html:32
+msgid "Notification Rules"
+msgstr ""
+
+#: web/templates/notifications/view_rules.html:19
+msgid "Telephone Number"
+msgstr ""
+
+#: web/templates/notifications/view_rules.html:22
+msgid "+989121118877"
+msgstr ""
+
+#: web/templates/notifications/view_rules.html:28
+msgid "Email Address"
+msgstr ""
+
+#: web/templates/notifications/view_rules.html:31
+msgid "name@company.com"
+msgstr ""
+
+#: web/templates/notifications/view_rules.html:38
+msgid "Telegram ID"
+msgstr ""
+
+#: web/templates/notifications/view_rules.html:41
+msgid "@your_id"
+msgstr ""
+
+#: web/templates/notifications/view_rules.html:48
+msgid "Alert Transited"
+msgstr ""
+
+#: web/templates/notifications/view_rules.html:59
+msgid "Alert Transiting"
+msgstr ""
+
+#: web/templates/notifications/view_rules.html:70
+msgid "Alert Hijacked"
+msgstr ""
+
+#: web/templates/notifications/view_rules.html:81
+msgid "Alert Hijacking"
+msgstr ""
+
+#: web/templates/notifications/view_rules.html:93
+msgid "Edit"
+msgstr ""
+
+#: web/templates/registration/login.html:10
+#: web/templates/registration/password_reset_done.html:9
+#: web/templates/registration/password_reset_form.html:9
+msgid "Login/SignUp"
+msgstr ""
+
+#: web/templates/registration/login.html:45
+#: web/templates/registration/login.html:66
+#: web/templates/registration/password_reset_done.html:38
+msgid "Login"
+msgstr ""
+
+#: web/templates/registration/login.html:47
+#: web/templates/registration/login.html:96
+msgid "Register"
+msgstr ""
+
+#: web/templates/registration/login.html:54
+#: web/templates/registration/login.html:80
+msgid "Username"
+msgstr ""
+
+#: web/templates/registration/login.html:58
+#: web/templates/registration/login.html:84
+msgid "Password"
+msgstr ""
+
+#: web/templates/registration/login.html:63
+msgid "`Remember me"
+msgstr ""
+
+#: web/templates/registration/login.html:71
+msgid "Forgot password?"
+msgstr ""
+
+#: web/templates/registration/login.html:88
+msgid "Confirm Password"
+msgstr ""
+
+#: web/templates/registration/login.html:92
+#: web/templates/registration/password_reset_form.html:39
+msgid "Email"
+msgstr ""
+
+#: web/templates/registration/password_reset_done.html:30
+#: web/templates/registration/password_reset_form.html:30
+msgid "Reset Password"
+msgstr ""
+
+#: web/templates/registration/password_reset_done.html:35
+msgid ""
+"We've emailed you instructions for setting your password. If they haven't "
+"arrived in a few minutes, check your spam folder."
+msgstr ""
+
+#: web/templates/registration/password_reset_form.html:27
+msgid "Your username and password didn't match. Please try again."
+msgstr ""
+
+#: web/templates/registration/password_reset_form.html:51
+msgid "Reset"
+msgstr ""
+
+#: web/templates/setting/general.html:9
+msgid "Language Settings"
+msgstr ""
+
+#: web/templates/setting/general.html:16
+msgid "Language"
+msgstr ""
+
+#: web/templates/setting/general.html:33
+msgid "Submit"
+msgstr ""
+
+#: web/templates/sidebar.html:8
+msgid "Quick Access"
+msgstr ""
+
+#: web/templates/sidebar.html:35
+msgid "Setting"
+msgstr ""
+
+#, fuzzy
+#~| msgid "welcome"
+#~ msgid "Welcome"
+#~ msgstr "Welcome"
+
+#~ msgid "Search"
+#~ msgstr "Search"

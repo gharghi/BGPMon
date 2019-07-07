@@ -1,0 +1,68 @@
+{% extends 'generic.html' %}
+
+
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% block content %}
+
+
+        {% include 'message.html' %}
+        {% block messages %}
+        {% endblock messages %}
+
+
+        <h2 class="text-center">{% trans 'Make Policy' %}</h2>
+        <form data-abide="aqyk5r-abide" method="POST" action="/{{ LANGUAGE_CODE }}/asn/{{ asn.asn }}/policy/add/">
+
+            {% csrf_token %}
+            <input type="hidden" name="asn" value="{{ asn.id }}">
+
+            <div class="grid-x grid-margin-x">
+
+                <fieldset class="cell medium-12">
+                    <legend>{% trans 'AS Number of Service Providers' %}</legend>
+                    {% if neighbors.left %}
+                        {% for neighbor in neighbors.left %}
+                            <input id="checkbox1" type="checkbox" name="left_asn" value="{{ neighbor }}">
+                            <label for="checkbox1">AS{{ neighbor }}</label>
+                        {% endfor %}
+                    {% endif %}
+
+
+                </fieldset>
+
+            </div>
+            <div class="grid-x grid-margin-x">
+
+                <fieldset class="cell medium-12">
+                    <legend>{% trans 'AS Number of Customers' %}</legend>
+                    {% if neighbors.right %}
+                        {% for neighbor in neighbors.right %}
+
+                            <input id="checkbox1" type="checkbox" name="right_asn" value="{{ neighbor }}">
+                            <label for="checkbox1">AS{{ neighbor }}</label>
+
+                        {% endfor %}
+                    {% endif %}
+
+
+                </fieldset>
+
+            </div>
+        <br>
+<a  id="SelectAll" data-open="exampleModal1" aria-controls="exampleModal1" aria-haspopup="true" tabindex="0" >{% trans "Select All" %}</a>
+
+
+            <div class="grid-x grid-margin-x">
+                <fieldset class="cell medium-6">
+                    <button class="button" type="submit" value="Submit">{% trans 'Continue' %}</button>
+                </fieldset>
+
+            </div>
+        </form>
+
+
+        <div class="js-off-canvas-overlay is-overlay-absolute"></div>
+
+{% endblock content %}

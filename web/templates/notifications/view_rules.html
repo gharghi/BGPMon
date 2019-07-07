@@ -1,0 +1,100 @@
+{% extends 'generic.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+        {% include 'message.html' %}
+        {% block messages %}
+        {% endblock messages %}
+        <h2 class="text-center">{% trans 'Notification Rules' %}</h2>
+        <form data-abide="aqyk5r-abide" novalidate="" method="POST">
+
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ rules.0.id }}">
+
+
+            <div class="grid-x grid-margin-x">
+
+                <div class="cell small-3">
+                    <label for="middle-label" class="text-right middle">{% trans 'Telephone Number' %}</label>
+                </div>
+                <div class="cell small-9">
+                    <input type="text" id="middle-label" name="phone" value="{{ rules.0.phone }}" placeholder="{% trans '+989121118877' %}">
+                </div>
+            </div>
+
+            <div class="grid-x grid-margin-x">
+                <div class="cell small-3">
+                    <label for="middle-label" class="text-right middle">{% trans 'Email Address' %}</label>
+                </div>
+                <div class="cell small-9">
+                    <input type="text" id="middle-label" name="email" value="{{ rules.0.email }}" placeholder="{% trans 'name@company.com' %}">
+                </div>
+            </div>
+
+
+            <div class="grid-x grid-margin-x">
+                <div class="cell small-3">
+                    <label for="middle-label" class="text-right middle">{% trans 'Telegram ID' %}</label>
+                </div>
+                <div class="cell small-9">
+                    <input type="text" id="middle-label" name="telegram" value="{{ rules.0.telegram }}" placeholder="{% trans '@your_id' %}">
+                </div>
+            </div>
+
+
+            <div class="grid-x grid-margin-x">
+                <fieldset class="cell medium-12">
+                    <legend>{% trans 'Alert Transited' %}</legend>
+                    <input id="checkbox1" type="checkbox" name="transited" {% if rules.0.transited == 1 %}
+                            checked="checked"
+                    {% endif %}>
+                    <label for="checkbox1">{{ rules.transited }}</label>
+                </fieldset>
+            </div>
+
+
+                    <div class="grid-x grid-margin-x">
+                <fieldset class="cell medium-12">
+                    <legend>{% trans 'Alert Transiting' %} </legend>
+                    <input id="checkbox1" type="checkbox" name="transiting" {% if rules.0.transiting == 1 %}
+                            checked="checked"
+                    {% endif %}>
+                    <label for="checkbox1">{{ rules.transiting }}</label>
+                </fieldset>
+            </div>
+
+
+                    <div class="grid-x grid-margin-x">
+                <fieldset class="cell medium-12">
+                    <legend>{% trans 'Alert Hijacked' %}</legend>
+                    <input id="checkbox1" type="checkbox" name="hijacked" {% if rules.0.hijacked == 1 %}
+                            checked="checked"
+                    {% endif %}>
+                    <label for="checkbox1">{{ rules.hijacked }}</label>
+                </fieldset>
+            </div>
+
+
+                    <div class="grid-x grid-margin-x">
+                <fieldset class="cell medium-12">
+                    <legend>{% trans 'Alert Hijacking' %}</legend>
+                    <input id="checkbox1" type="checkbox" name="hijacking" {% if rules.0.hijacking == 1 %}
+                            checked="checked"
+                    {% endif %}>
+                    <label for="checkbox1">{{ rules.hijacking }}</label>
+                </fieldset>
+            </div>
+
+
+
+            <div class="grid-x grid-margin-x">
+                <fieldset class="cell medium-6">
+                    <button class="button" type="submit" value="Submit">{% trans 'Edit' %}</button>
+                </fieldset>
+
+            </div>
+        </form>
+        <div class="js-off-canvas-overlay is-overlay-absolute"></div>
+
+{% endblock content %}

@@ -1,0 +1,71 @@
+{% extends 'generic.html' %}
+
+
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+
+
+        {% include 'message.html' %}
+        {% block messages %}
+        {% endblock messages %}
+
+
+        <h2 class="text-center">{% trans 'Add Asn' %}</h2>
+        <form data-abide="aqyk5r-abide" novalidate="" method="POST">
+            {% csrf_token %}
+            <div class="grid-x grid-margin-x">
+                <div class="cell small-3">
+                    <label for="middle-label" class="text-right middle">{% trans 'Asn' %}</label>
+                </div>
+                <div class="cell small-9">
+                    <input type="text" name="asn" id="middle-label"
+                           placeholder="{% trans 'Example: AS3333' %}">
+                </div>
+            </div>
+            <div class="grid-x grid-margin-x">
+                <fieldset class="cell medium-6">
+                    <button class="button" type="submit" value="Submit">{% trans 'Add' %}</button>
+                </fieldset>
+
+            </div>
+        </form>
+
+    <hr>
+        <h2 class="text-center">{% trans 'List of Asns' %}</h2>
+
+        <table>
+            <thead>
+            <tr>
+                <th width="250">{% trans 'AS Number' %}</th>
+                <th width="600">{% trans 'Actions' %}</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for item in asns %}
+                <tr>
+                    <td>{{ item.asn }}</td>
+                    <td>
+                        <p><a href="{{ item.asn }}/delete" data-open="exampleModal1" aria-controls="exampleModal1"
+                              aria-haspopup="true" tabindex="0">{% trans 'Delete' %}</a>
+                            |
+                        <a href="{{ item.asn }}/policy" data-open="exampleModal1" aria-controls="exampleModal1"
+                              aria-haspopup="true" tabindex="0">{% trans 'Make Policy' %}</a>
+                        |
+                        <a href="{{ item.asn }}/neighbors" data-open="exampleModal1" aria-controls="exampleModal1"
+                              aria-haspopup="true" tabindex="0">{% trans 'List neighbors' %}</a>
+                        |
+                        <a href="{{ item.asn }}/prefixes" data-open="exampleModal1" aria-controls="exampleModal1"
+                              aria-haspopup="true" tabindex="0">{% trans 'List Prefixes' %}</a></p>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="js-off-canvas-overlay is-overlay-absolute"></div>
+
+{% endblock content %}

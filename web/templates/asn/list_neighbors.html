@@ -1,0 +1,46 @@
+{% extends 'generic.html' %}
+
+
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+
+        {% include 'message.html' %}
+        {% block messages %}
+        {% endblock messages %}
+
+
+
+        <h2 class="text-center">{% trans 'List of Asns' %}</h2>
+
+        <table>
+            <thead>
+            <tr>
+                <th width="200">{% trans 'AS Number' %}</th>
+                <th width="200">{% trans 'Left' %}</th>
+                <th width="200">{% trans 'Right' %}</th>
+                <th width="150">{% trans 'Actions' %}</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for neighbor in neighbors %}
+                <tr>
+                    <td>{{ asn }}</td>
+                    <td>{{ neighbor.left }}</td>
+                    <td>{{ neighbor.right }}</td>
+                    <td>
+                        <p><a href="/neighbor/{{ neighbor.id }}/delete/" data-open="exampleModal1"
+                              aria-controls="exampleModal1"
+                              aria-haspopup="true" tabindex="0">{% trans 'Delete' %}</a>
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="js-off-canvas-overlay is-overlay-absolute"></div>
+
+{% endblock content %}

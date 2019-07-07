@@ -34,7 +34,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         cs = connection.cursor()
-        os.system('/bin/bash ' + settings.BASE_DIR + '/apps/backend/import_updates.sh')
+        os.system('/bin/bash ' + settings.BASE_DIR + '/apps/backend/management/commands/import_updates.sh')
         # searching announced prefixes in our database
         updates = []
         query = "select prefix.prefix, dump.asn, dump.path, dump.community, dump.time from main_app_prefix as prefix inner join main_app_dump as dump on dump.network >= prefix.network and dump.network <= prefix.broadcast group by prefix.prefix, dump.asn, dump.path, dump.community, dump.time"

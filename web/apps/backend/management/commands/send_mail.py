@@ -54,5 +54,6 @@ class Command(BaseCommand):
         users = User.objects.all()
         for user in users:
             get_notifications(user)
+        Notifications.objects.all().update(status=True)
         #####update all of notifications ststus set to 1
         return True

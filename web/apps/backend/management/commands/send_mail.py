@@ -36,7 +36,7 @@ def get_notifications(user):
                     continue
                 if notification.type == 4 and not rule.hijacking:
                     continue
-                mail = mail + str(notification.prefix) + '\t\t' + status(notification.type) + '\t\t\t Path:' + str(notification.path) + '\n'
+                mail = mail + str(notification.prefix) + '\t\t' + status(notification.type) + '\t\t\t ' + str(notification.path) + '\n'
 
             if rule.email:
                 email = EmailMessage('BGPMon Alert', mail, to=[rule.email])

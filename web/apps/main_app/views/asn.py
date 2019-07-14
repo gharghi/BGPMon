@@ -21,7 +21,7 @@ class AddAsn(TemplateView):
     def post(self, request, *args, **kwargs):
         try:
             if not request.POST['asn']:
-                messages.success(request, _('Please enter a valid AS Number'))
+                messages.warning(request, _('Please enter a valid AS Number'))
                 return HttpResponseRedirect("/asn/")
 
             username = request.user

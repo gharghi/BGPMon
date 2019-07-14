@@ -26,7 +26,7 @@ TELEGRAM_BOT_KEY = '888169271:AAHFyt6aoODgMSqiT5SUFaSmbtF_H7UCpCg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['bgpmonitor.net','198.143.182.13','127.0.0.1']
+ALLOWED_HOSTS = ['bgpmonitor.net','127.0.0.1']
 
 
 # Application definition

@@ -20,9 +20,9 @@ def insert_notifications(notification):
 
     for user_id in users:
         cs.execute(
-            "insert into main_app_notifications (user_id, type, path, prefix, asn, time) values (" + str(
+            "insert into main_app_notifications (user_id, type, path, prefix, asn, time, status) values (" + str(
                 user_id['user_id']) + "," + str(notification['type']) + ",'" + str(notification['path']) + "','" + str(
-                notification['prefix']) + "'," + str(notification['asn']) + "," + str(notification['time']) + ")")
+                notification['prefix']) + "'," + str(notification['asn']) + "," + str(notification['time']) + ", False)")
         if cs.rowcount:
             return True, notification
         else:

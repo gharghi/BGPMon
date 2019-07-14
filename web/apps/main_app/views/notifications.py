@@ -11,7 +11,7 @@ from web.apps.main_app.models import Notifications, Prefix, Asn
 def view_notifications(request):
     enddate = int(time.time())
     startdate = enddate - 86400
-    notifications = Notifications.objects.filter(time__range=[startdate, enddate]).filter(user__id=request.user.id)
+    notifications = Notifications.objects.filter(time__range=[startdate, enddate]).filter(user__id=request.user.id).order_by('time').reverse()
     return render(request, 'notifications/list_notifications.html', {'notifications': notifications})
 
 @register.filter

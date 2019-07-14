@@ -24,7 +24,7 @@ def get_notifications(user):
         # end_date = int(time.time())
         # start_date = end_date - 359
         # notifications = Notifications.objects.filter(Q(user__id=user.id) | Q(time__range=[start_date, end_date]))
-        notifications = Notifications.objects.filter(status=0).filter(user__id=user.id)
+        notifications = Notifications.objects.filter(status=0).filter(user__id=user.id).order_by('time').reverse()
         mail = "BGPMon Alerts\n"
         if notifications.exists(): ##prevent sending empty notification
             for notification in notifications:

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-dir=/shahin/BGPMon/web/apps/backend
-#dir=/Users/shahin/PycharmProjects/BGPMon/web/apps/backend
+#dir=/shahin/BGPMon/web/apps/backend
+dir=/Users/shahin/PycharmProjects/BGPMon/web/apps/backend
 rm $dir/tmp/latest-update.gz
 rm $dir/tmp/out.csv
 wget -P $dir/tmp/ http://data.ris.ripe.net/rrc00/latest-update.gz

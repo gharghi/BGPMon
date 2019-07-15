@@ -19,6 +19,10 @@ def insert_notifications(notification):
         users = prefix_user
 
     for user_id in users:
+        print("insert into main_app_notifications (user_id, type, path, prefix, asn, time, status) values (" + str(
+                user_id['user_id']) + "," + str(notification['type']) + ",'" + str(notification['path']) + "','" + str(
+                notification['prefix']) + "'," + str(notification['asn']) + "," + str(
+                notification['time']) + ", 0)")
         cs.execute(
             "insert into main_app_notifications (user_id, type, path, prefix, asn, time, status) values (" + str(
                 user_id['user_id']) + "," + str(notification['type']) + ",'" + str(notification['path']) + "','" + str(

@@ -19,10 +19,15 @@ def insert_notifications(notification):
         users = prefix_user
 
     for user_id in users:
+        print("insert into main_app_notifications (user_id, type, path, prefix, asn, time, status) values (" + str(
+                user_id['user_id']) + "," + str(notification['type']) + ",'" + str(notification['path']) + "','" + str(
+                notification['prefix']) + "'," + str(notification['asn']) + "," + str(
+                notification['time']) + ", 0)")
         cs.execute(
             "insert into main_app_notifications (user_id, type, path, prefix, asn, time, status) values (" + str(
                 user_id['user_id']) + "," + str(notification['type']) + ",'" + str(notification['path']) + "','" + str(
-                notification['prefix']) + "'," + str(notification['asn']) + "," + str(notification['time']) + ", False)")
+                notification['prefix']) + "'," + str(notification['asn']) + "," + str(
+                notification['time']) + ", 0)")
         if cs.rowcount:
             return True, notification
         else:
@@ -60,7 +65,8 @@ class Command(BaseCommand):
 
             # Checking if prefix is announcing with other ASBs that are not in database
             prefix = update['prefix']
-            query = "select origins.origin as origin, prefix.prefix as prefix, prefix.user_id as user from main_app_origins as origins inner join main_app_prefix as prefix on origins.prefix_id = prefix.id where prefix.prefix = '" + prefix + "' and origins.origin = " + str(asn)
+            query = "select origins.origin as origin, prefix.prefix as prefix, prefix.user_id as user from main_app_origins as origins inner join main_app_prefix as prefix on origins.prefix_id = prefix.id where prefix.prefix = '" + prefix + "' and origins.origin = " + str(
+                asn)
             cs.execute(query)
             if not cs.rowcount:
                 notification = {'path': update['path'], 'time': update['time'], 'asn': asn, 'prefix': prefix,
@@ -114,5 +120,5 @@ class Command(BaseCommand):
                     print("error, is transiting ", insert_notifications(notification))
             else:
                 print("info, upstream path has changed")
-        #run the send mail command
+        # run the send mail command
         # return render(request, 'notify/send_mail.html')

@@ -12,6 +12,8 @@ class Dump(models.Model):
     network = IPField(max_length=60)
     path = models.TextField( null=True)
     community = models.TextField(blank=True, null=True)
+    prefix = IPField(max_length=60, null=True)
+
 
     def __str__(self):
         return self.network

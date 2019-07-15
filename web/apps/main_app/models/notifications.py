@@ -6,7 +6,7 @@ from web.apps.jwt_store.models import User
 class Notifications(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     type = models.IntegerField(default=0)
-    path = models.TextField(null=True)
+    path = models.TextField(max_length=500, null=True)
     prefix = models.CharField(max_length=60, null=True)
     asn = models.IntegerField(null=True)
     status = models.BooleanField(default=False)

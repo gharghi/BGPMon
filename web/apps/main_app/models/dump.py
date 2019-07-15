@@ -10,7 +10,7 @@ class Dump(models.Model):
     time = models.BigIntegerField()
     asn = models.IntegerField(null=True)
     network = IPField(max_length=60)
-    path = models.TextField( null=True)
+    path = models.TextField(max_length=500, null=True)
     community = models.TextField(blank=True, null=True)
     prefix = IPField(max_length=60, null=True)
 

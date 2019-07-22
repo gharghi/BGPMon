@@ -55,7 +55,7 @@ class Command(BaseCommand):
             try:
                 query = "select neighbors.left as left_neighbor, neighbors.right as right_neighbor, asn.asn as asn, asn.user_id as user " \
                         "from main_app_neighbors as neighbors inner join main_app_asn as asn on neighbors.asn_id = asn.id where " \
-                        "asn.asn = '" + str(asn) + "' and neighbors.left = " + str(upstream)
+                        "asn.asn = " + str(asn) + " and neighbors.left = " + str(upstream)
                 cs.execute(query)
             except Exception as e:
                 print(e)

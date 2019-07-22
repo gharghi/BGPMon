@@ -71,7 +71,7 @@ class Command(BaseCommand):
             try:
                 query = "select origins.origin as origin, prefix.prefix as prefix, prefix.user_id as user from main_app_origins as origins " \
                         "inner join main_app_prefix as prefix on origins.prefix_id = prefix.id where prefix.prefix = '" + prefix + \
-                        "' and origins.origin = " + str(asn)
+                        "' and origins.origin = " + asn
                 cs.execute(query)
             except Exception as e:
                 print(e)

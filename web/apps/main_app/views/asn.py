@@ -42,7 +42,7 @@ class AddAsn(TemplateView):
 
 
 def delete_asn(request, asn):
-    asn_object = get_object_or_404(Asn, asn=asn)
+    asn_object = Asn.objects.filter(asn=asn, user_id=request.user.id)
     creator = asn_object.user.username
 
     if request.user.is_authenticated and request.user.username == creator:
@@ -52,12 +52,9 @@ def delete_asn(request, asn):
 
 
 def asn_make_policy(request, asn):
-    asn_object = get_object_or_404(Asn, asn=asn)
-    creator = asn_object.user.username
-    if request.user.is_authenticated and request.user.username == creator:
-        neighbors = find_neighbors(asn, request)
-        # db_neighbors = Neighbors.objects.filter()
-        return render(request, 'asn/neighbors.html', {'neighbors': neighbors, 'asn': asn_object})
+    asn_object = Asn.objects.filter(asn = asn, user_id = request.user.id)
+    neighbors = find_neighbors(asn, request)
+    return render(request, 'asn/neighbors.html', {'neighbors': neighbors, 'asn': asn_object.values()[0]})
 
 
 #fetch list of right and left neighbors of ASN

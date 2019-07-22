@@ -20,9 +20,9 @@ def insert_notifications(notification):
 
     for user_id in users:
         print("insert into main_app_notifications (user_id, type, path, prefix, asn, time, status) values (" + str(
-                user_id['user_id']) + "," + str(notification['type']) + ",'" + str(notification['path']) + "','" + str(
-                notification['prefix']) + "'," + str(notification['asn']) + "," + str(
-                notification['time']) + ", 0)")
+            user_id['user_id']) + "," + str(notification['type']) + ",'" + str(notification['path']) + "','" + str(
+            notification['prefix']) + "'," + str(notification['asn']) + "," + str(
+            notification['time']) + ", 0)")
         cs.execute(
             "insert into main_app_notifications (user_id, type, path, prefix, asn, time, status) values (" + str(
                 user_id['user_id']) + "," + str(notification['type']) + ",'" + str(notification['path']) + "','" + str(
@@ -42,7 +42,9 @@ class Command(BaseCommand):
         os.system('/bin/bash ' + settings.BASE_DIR + '/apps/backend/management/commands/import_updates.sh')
         # searching announced prefixes in our database
         updates = []
-        query = "select dump.prefix, dump.asn, dump.path, dump.community, dump.time from main_app_prefix as prefix inner join main_app_dump as dump on dump.network >= prefix.network and dump.network <= prefix.broadcast group by prefix.prefix, dump.asn, dump.path, dump.community, dump.time"
+        query = "select prefix.prefix, dump.asn, dump.path, dump.community, dump.time from main_app_prefix as prefix inner join " \
+                "main_app_dump as dump on dump.network >= prefix.network and dump.network <= prefix.broadcast group by prefix.prefix, " \
+                "dump.asn, dump.path, dump.community, dump.time"
         cs.execute(query)
         rows = cs.fetchall()
         for item in rows:
@@ -54,8 +56,9 @@ class Command(BaseCommand):
             path = update['path'].split(' ')[::-1]
             asn = path[0]
             upstream = path[1]
-            query = "select neighbors.left as left_neighbor, neighbors.right as right_neighbor, asn.asn as asn, asn.user_id as user from main_app_neighbors as neighbors inner join main_app_asn as asn on neighbors.asn_id = asn.id where asn.asn = '" + str(
-                asn) + "' and neighbors.left = " + str(upstream)
+            query = "select neighbors.left as left_neighbor, neighbors.right as right_neighbor, asn.asn as asn, asn.user_id as user " \
+                    "from main_app_neighbors as neighbors inner join main_app_asn as asn on neighbors.asn_id = asn.id where " \
+                    "asn.asn = '" + str(asn) + "' and neighbors.left = " + str(upstream)
             cs.execute(query)
             if not cs.rowcount:
                 notification = {'path': update['path'], 'time': update['time'], 'asn': asn, 'prefix': update['prefix'],
@@ -65,8 +68,9 @@ class Command(BaseCommand):
 
             # Checking if prefix is announcing with other ASBs that are not in database
             prefix = update['prefix']
-            query = "select origins.origin as origin, prefix.prefix as prefix, prefix.user_id as user from main_app_origins as origins inner join main_app_prefix as prefix on origins.prefix_id = prefix.id where prefix.prefix = '" + prefix + "' and origins.origin = " + str(
-                asn)
+            query = "select origins.origin as origin, prefix.prefix as prefix, prefix.user_id as user from main_app_origins as origins " \
+                    "inner join main_app_prefix as prefix on origins.prefix_id = prefix.id where prefix.prefix = '" + prefix + \
+                    "' and origins.origin = " + str(asn)
             cs.execute(query)
             if not cs.rowcount:
                 notification = {'path': update['path'], 'time': update['time'], 'asn': asn, 'prefix': prefix,

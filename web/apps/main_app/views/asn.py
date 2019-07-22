@@ -55,8 +55,12 @@ def delete_asn(request, asn):
 
 
 def asn_make_policy(request, asn):
-    asn_object = Asn.objects.filter(asn=asn, user_id=request.user.id)
-    neighbors = find_neighbors(asn, request)
+    try:
+        asn_object = Asn.objects.filter(asn=asn, user_id=request.user.id)
+        neighbors = find_neighbors(asn, request)
+
+    except Exception as e:
+        print(e)
     return render(request, 'asn/neighbors.html', {'neighbors': neighbors, 'asn': asn_object.values()[0]})
 
 

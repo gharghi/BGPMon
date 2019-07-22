@@ -19,10 +19,6 @@ def insert_notifications(notification):
         users = prefix_user
 
     for user_id in users:
-        print("insert into main_app_notifications (user_id, type, path, prefix, asn, time, status) values (" + str(
-            user_id['user_id']) + "," + str(notification['type']) + ",'" + str(notification['path']) + "','" + str(
-            notification['prefix']) + "'," + str(notification['asn']) + "," + str(
-            notification['time']) + ", 0)")
         cs.execute(
             "insert into main_app_notifications (user_id, type, path, prefix, asn, time, status) values (" + str(
                 user_id['user_id']) + "," + str(notification['type']) + ",'" + str(notification['path']) + "','" + str(
@@ -42,13 +38,13 @@ class Command(BaseCommand):
         os.system('/bin/bash ' + settings.BASE_DIR + '/apps/backend/management/commands/import_updates.sh')
         # searching announced prefixes in our database
         updates = []
-        query = "select prefix.prefix, dump.asn, dump.path, dump.community, dump.time from main_app_prefix as prefix inner join " \
+        query = "select prefix.prefix, dump.asn, dump.path, dump.time from main_app_prefix as prefix inner join " \
                 "main_app_dump as dump on dump.network >= prefix.network and dump.network <= prefix.broadcast group by prefix.prefix, " \
-                "dump.asn, dump.path, dump.community, dump.time"
+                "dump.asn, dump.path"
         cs.execute(query)
         rows = cs.fetchall()
         for item in rows:
-            updates.append({'prefix': item[0], 'asn': item[1], 'path': item[2], 'community': item[3], 'time': item[4]})
+            updates.append({'prefix': item[0], 'asn': item[1], 'path': item[2], 'time': item[3]})
         # print(updates)
 
         for update in updates:

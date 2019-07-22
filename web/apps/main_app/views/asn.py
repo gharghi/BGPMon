@@ -46,21 +46,14 @@ class AddAsn(TemplateView):
 
 def delete_asn(request, asn):
     asn_object = Asn.objects.filter(asn=asn, user_id=request.user.id)
-    creator = asn_object.user.username
-
-    if request.user.is_authenticated and request.user.username == creator:
-        asn_object.delete()
-        messages.success(request, _("AS Number deleted successfully"))
-        return HttpResponseRedirect("/asn/")
+    asn_object.delete()
+    messages.success(request, _("AS Number deleted successfully"))
+    return HttpResponseRedirect("/asn/")
 
 
 def asn_make_policy(request, asn):
-    try:
-        asn_object = Asn.objects.filter(asn=asn, user_id=request.user.id)
-        neighbors = find_neighbors(asn, request)
-
-    except Exception as e:
-        print(e)
+    asn_object = Asn.objects.filter(asn=asn, user_id=request.user.id)
+    neighbors = find_neighbors(asn, request)
     return render(request, 'asn/neighbors.html', {'neighbors': neighbors, 'asn': asn_object.values()[0]})
 
 

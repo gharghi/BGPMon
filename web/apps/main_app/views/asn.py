@@ -1,12 +1,15 @@
-import urllib, json
-from django.http import HttpResponseRedirect
-from django.views.generic import TemplateView
-from django.shortcuts import render, get_object_or_404
-from web.apps.main_app.forms import AddAsnForm
+import json
+import urllib
+
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required, permission_required
-from web.apps.main_app.models import Asn, Neighbors
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.utils.translation import gettext as _
+from django.views.generic import TemplateView
+
+from web.apps.main_app.forms import AddAsnForm
+from web.apps.main_app.models import Asn
+
 
 # @is_user_in_group('Customers')  # for authorization with group name
 def asn(request):
@@ -52,15 +55,15 @@ def delete_asn(request, asn):
 
 
 def asn_make_policy(request, asn):
-    asn_object = Asn.objects.filter(asn = asn, user_id = request.user.id)
+    asn_object = Asn.objects.filter(asn=asn, user_id=request.user.id)
     neighbors = find_neighbors(asn, request)
     return render(request, 'asn/neighbors.html', {'neighbors': neighbors, 'asn': asn_object.values()[0]})
 
 
-#fetch list of right and left neighbors of ASN
+# fetch list of right and left neighbors of ASN
 def find_neighbors(asn, request):
     link = "http://stat.ripe.net/data/asn-neighbours/data.json?resource=AS" + str(asn)
-    neighbors = {'left':[], 'right':[]}
+    neighbors = {'left': [], 'right': []}
     try:
         with urllib.request.urlopen(link, timeout=10) as url:
             data = json.loads(url.read().decode())

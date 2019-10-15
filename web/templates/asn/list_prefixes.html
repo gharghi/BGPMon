@@ -1,53 +1,77 @@
 {% extends 'generic.html' %}
 
-
 {% load static %}
 {% load i18n %}
-{% get_current_language as LANGUAGE_CODE %}
 {% block content %}
+    {% get_current_language as LANGUAGE_CODE %}
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <!-- Basic layout-->
+            <form method="POST" action="/asn/{{ asn }}/prefix/add/">
+                {% csrf_token %}
+                <input type="hidden" name="origin" value="{{ asn }}">
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">{% trans 'Detected prefixes originated from AS' %}{{ asn }}<a
+                                class="heading-elements-toggle"><i class="icon-more"></i></a></h5>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a data-action="collapse"></a></li>
+                                <li><a data-action="reload"></a></li>
+                                <li><a data-action="close"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="form-group">
+                            <a id="SelectAll">{% trans "Select All" %}</a>
+                        </div>
 
 
-    {% include 'message.html' %}
-    {% block messages %}
-    {% endblock messages %}
+
+                        {% if prefixes %}
+                            <div class="form-group">
+                                <label class="text-semibold">{% trans 'AS Number of Service Providers' %}</label>
+
+                                <div class="row">
+
+                                    {% for prefix in prefixes %}
+
+                                        <div class="col-md-3">
+                                            <input name="prefix" value="{{ prefix }}"
+                                                   type="checkbox"
+                                                   class="styled"
+                                                    {% if prefix in saved_prefixes %}
+                                                   checked="checked"
+                                                   disabled="disabled"
+                                                    {% endif %} >
+                                            &nbsp;{{ prefix }}
 
 
-    <h2 class="text-center">{% trans 'Make Policy' %}</h2>
-    <form data-abide="aqyk5r-abide" method="POST" action="/{{ LANGUAGE_CODE }}/asn/{{ asn }}/prefix/add/">
+                                        </div>
 
-        {% csrf_token %}
-        <input type="hidden" name="origin" value="{{ asn }}">
-
-        <div class="grid-x grid-margin-x">
-
-            <fieldset class="cell medium-12">
-                <legend>{% trans 'Detected prefixes' %}</legend>
-                {% if prefixes %}
-                    {% for prefix in prefixes %}
-                        <input id="checkbox1" type="checkbox" name="prefix" value="{{ prefix }}">
-                        <label for="checkbox1">{{ prefix }}</label>
-                    {% endfor %}
-                {% endif %}
+                                    {% endfor %}
 
 
-            </fieldset>
+                                </div>
+                            </div>
+                        {% endif %}
 
+
+
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary">{% trans 'Save' %} <i
+                                    class="icon-arrow-right14 position-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- /basic layout -->
         </div>
-
-        <br>
-        <a id="SelectAll" data-open="exampleModal1" aria-controls="exampleModal1" aria-haspopup="true"
-           tabindex="0">{% trans "Select All" %}</a>
-
-
-        <div class="grid-x grid-margin-x">
-            <fieldset class="cell medium-6">
-                <button class="button" type="submit" value="Submit">{% trans 'Save' %}</button>
-            </fieldset>
-
-        </div>
-    </form>
-
-
-    <div class="js-off-canvas-overlay is-overlay-absolute"></div>
-
+    </div>
 {% endblock content %}
+

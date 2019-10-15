@@ -1,44 +1,62 @@
 {% extends 'generic.html' %}
-
-
 {% load static %}
 {% load i18n %}
 {% block content %}
 
-        {% include 'message.html' %}
-        {% block messages %}
-        {% endblock messages %}
+    <!-- Default ordering -->
+    <div class="panel panel-flat">
+        <div class="panel-heading">
+            <h5 class="panel-title">{% trans 'List of Notifications' %}</h5>
+            <div class="heading-elements">
+                <ul class="icons-list">
+                    <li><a data-action="collapse"></a></li>
+                    <li><a data-action="reload"></a></li>
+                    <li><a data-action="close"></a></li>
+                </ul>
+            </div>
+        </div>
 
 
-
-        <h2 class="text-center">{% trans 'List of Notifications' %}</h2>
-
-        <table>
+        <table class="table datatable-sorting">
             <thead>
             <tr>
                 <th width="150">{% trans 'Prefix' %}</th>
-                <th width="100">{% trans 'Originator' %}</th>
-                <th width="300">{% trans 'Path' %}</th>
-                <th width="200">{% trans 'Type' %}</th>
-                <th width="200">{% trans 'Time' %}</th>
+                <th class="text-center">{% trans 'Originator' %}</th>
+                <th class="text-center">{% trans 'Path' %}</th>
+                <th class="text-center">{% trans 'Type' %}</th>
+                <th class="text-center">{% trans 'Time' %}</th>
+                <th class="text-center">{% trans 'Action' %}</th>
 
 
             </tr>
             </thead>
             <tbody>
+
             {% for notification in notifications %}
-                <tr>
-                    <td>{{ notification.prefix }}</td>
-                    <td>{{ notification.asn }}</td>
-                    <td>{{ notification.path }}</td>
-                    <td>{{ notification.type|status }}</td>
-                    <td>{{ notification.time|to_date }}</td>
+                <tr role="row" class="{% cycle "odd" "even" %}">
+                    <td class="text-center">{{ notification.prefix }}</td>
+                    <td class="text-center">{{ notification.asn }}</td>
+                    <td class="text-center">{{ notification.path }}</td>
+                    <td class="text-center">{{ notification.type|status }}</td>
+                    <td class="text-center">{{ notification.time|to_date }}</td>
+                    <td class="text-center"><span>
+                            {% if notification.status %}
+                                <span class="text-green">{% trans 'Fixed' %}</span>
+
+                            {% else %}
+                                <a href="/notifications/{{ notification.id }}/fix">{% trans 'Fix' %}
+                            {% endif %}
+                            </a></span></td>
+
 
                 </tr>
             {% endfor %}
+
+
             </tbody>
         </table>
+    </div>
+    <!-- /default ordering -->
 
-        <div class="js-off-canvas-overlay is-overlay-absolute"></div>
 
 {% endblock content %}

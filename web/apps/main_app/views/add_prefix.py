@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from web.apps.main_app.models import Prefix, Origins
 from django.utils.translation import gettext as _
 import socket
+import pandas as pd
 
 
 # @is_user_in_group('Customers')  # for authorization with group name
@@ -46,7 +47,7 @@ class MakePolicy(TemplateView):
 
 
                 messages.success(request, _('Prefix(s) added successfully'))
-                return HttpResponseRedirect("/prefix/add/")
+                return HttpResponseRedirect("/prefix/")
 
             else:
                 messages.error(request, form.errors)
@@ -59,14 +60,25 @@ class MakePolicy(TemplateView):
 
 class CreatePrefix(TemplateView):
     def get(self, request, *args, **kwargs):
-        prefixes = Prefix.objects.filter(user=request.user)
+        objects = Prefix.objects.filter(user=request.user).values('prefix','id')
+        prefixes = []
+        for object in objects:
+            prefix = {'prefix': object['prefix'], 'id':object['id']}
+            origins = Origins.objects.filter(prefix=object['id']).values('origin', 'id')
+            asns = []
+            if origins:
+                for origin in origins:
+                    asns.append({'id': origin['id'], 'origin': origin['origin']})
+            prefixes.append({'prefix':prefix, 'origins': asns})
+
         return render(request, 'add_prefix/add_prefix.html', {'prefixes': prefixes})
+
 
     def post(self, request, *args, **kwargs):
         try:
             if not request.POST['prefix']:
                 messages.success(request, _('Please enter a valid prefix'))
-                return HttpResponseRedirect("/prefix/add/")
+                return HttpResponseRedirect("/prefix/")
 
             form = AddPrefixForm(request.POST)
             if form.is_valid():
@@ -111,16 +123,24 @@ def delete_prefix(request, id):
     if request.user.is_authenticated and request.user.username == creator:
         prefix_object.delete()
         messages.success(request, _("Prefix deleted successfully"))
-        return HttpResponseRedirect("/prefix/add/")
+        return HttpResponseRedirect("/prefix/")
 
 
 def prefix_make_policy(request, id):
-    prefix_object = get_object_or_404(Prefix, id=id)
-    creator = prefix_object.user.username
-    if request.user.is_authenticated and request.user.username == creator:
-        origins = find_origins(prefix_object.prefix, request)
-        return render(request, 'add_prefix/prefix_policy.html', {'origins': origins, 'prefix_id': prefix_object.id})
-
+    try:
+        prefix = Prefix.objects.get(id=id)
+        if prefix:
+            saved_origins = Origins.objects.filter(prefix=prefix).values_list('origin', flat=True)
+            if request.user == prefix.user:
+                origins = find_origins(prefix.prefix, request)
+                return render(request, 'add_prefix/prefix_policy.html', {'origins': origins, 'prefix': prefix, 'saved_origins': saved_origins})
+        else:
+            messages.error(request, _('No such prefix'))
+            return render(request, 'add_prefix/add_prefix.html')
+    except Exception as e:
+        # messages.error(request, e)
+        messages.error(request, _('An error has occured'))
+        return render(request, 'add_prefix/add_prefix.html')
 
 def find_database_origins(prefix, request):
     link = "http://rest.db.ripe.net/search.json?query-string=" + prefix + "&type-filter=route&type-filter=route6&flags=all-more&flags=no-referenced&flags=no-irt&source=RIPE"
@@ -142,8 +162,7 @@ def find_database_origins(prefix, request):
 
 def find_origins(prefix, request):
     splitted = prefix.split('/')
-    link = "http://stat.ripe.net/data/prefix-routing-consistency/data.json?resource=" + splitted[0] + '%2F' + splitted[
-        1]
+    link = "http://stat.ripe.net/data/prefix-routing-consistency/data.json?resource=" + splitted[0] + '%2F' + splitted[1]
     objects = {'prefix': prefix, 'in_bgp': [], 'in_db': []}
     try:
         with urllib.request.urlopen(link, timeout=10) as url:
@@ -196,7 +215,7 @@ class AddPrefixPolicy(TemplateView):
 
 
                 messages.success(request, _('Prefix(s) added successfully'))
-                return HttpResponseRedirect("/prefix/add/")
+                return HttpResponseRedirect("/prefix/")
 
             else:
                 messages.error(request, form.errors)

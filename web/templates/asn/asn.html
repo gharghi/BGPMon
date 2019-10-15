@@ -1,71 +1,95 @@
 {% extends 'generic.html' %}
-
-
 {% load static %}
 {% load i18n %}
 {% block content %}
+    <!-- Dashboard content -->
+    <div class="row">
+        <div class="col-md-12">
+
+            <!-- Basic layout-->
+            <form method="post">
+                {% csrf_token %}
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">{% trans 'Add ASN' %}<a class="heading-elements-toggle"><i
+                                class="icon-more"></i></a></h5>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a data-action="collapse"></a></li>
+                                <li><a data-action="reload"></a></li>
+                                <li><a data-action="close"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>{% trans 'ASN' %}</label>
+                            <input type="text" name="asn" class="form-control"
+                                   placeholder="{% trans 'Example: 3333' %}">
+                        </div>
 
 
-
-        {% include 'message.html' %}
-        {% block messages %}
-        {% endblock messages %}
-
-
-        <h2 class="text-center">{% trans 'Add Asn' %}</h2>
-        <form data-abide="aqyk5r-abide" novalidate="" method="POST">
-            {% csrf_token %}
-            <div class="grid-x grid-margin-x">
-                <div class="cell small-3">
-                    <label for="middle-label" class="text-right middle">{% trans 'Asn' %}</label>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary">{% trans 'Add' %} <i
+                                    class="icon-arrow-left13 position-right"></i></button>
+                        </div>
+                    </div>
                 </div>
-                <div class="cell small-9">
-                    <input type="text" name="asn" id="middle-label"
-                           placeholder="{% trans 'Example: AS3333' %}">
-                </div>
+            </form>
+            <!-- /basic layout -->
+        </div>
+    </div>
+    <!-- /dashboard content -->
+
+    <!-- Default ordering -->
+    <div class="panel panel-flat">
+        <div class="panel-heading">
+            <h5 class="panel-title">{% trans 'List of Asns' %}</h5>
+            <div class="heading-elements">
+                <ul class="icons-list">
+                    <li><a data-action="collapse"></a></li>
+                    <li><a data-action="reload"></a></li>
+                    <li><a data-action="close"></a></li>
+                </ul>
             </div>
-            <div class="grid-x grid-margin-x">
-                <fieldset class="cell medium-6">
-                    <button class="button" type="submit" value="Submit">{% trans 'Add' %}</button>
-                </fieldset>
+        </div>
 
-            </div>
-        </form>
 
-    <hr>
-        <h2 class="text-center">{% trans 'List of Asns' %}</h2>
-
-        <table>
+        <table class="table datatable-sorting">
             <thead>
             <tr>
-                <th width="250">{% trans 'AS Number' %}</th>
-                <th width="600">{% trans 'Actions' %}</th>
+                <th class="text-center">{% trans 'AS Number' %}</th>
+                <th class="text-center">{% trans 'Actions' %}</th>
 
             </tr>
             </thead>
             <tbody>
-
             {% for item in asns %}
-                <tr>
-                    <td>{{ item.asn }}</td>
-                    <td>
-                        <p><a href="{{ item.asn }}/delete" data-open="exampleModal1" aria-controls="exampleModal1"
-                              aria-haspopup="true" tabindex="0">{% trans 'Delete' %}</a>
+                <tr role="row" class="{% cycle "odd" "even" %}">
+                    <td class="text-center">AS{{ item.asn }}</td>
+                    {#                    <td class="text-center">-#}
+                    {#                        {% for origin in item.origins %}#}
+                    {#                            <span> AS{{ origin.origin }}</span> -#}
+                    {#                        {% endfor %}#}
+                    {#                    </td>#}
+                    <td class="text-center">
+                        <span>
+                            <a href="{{ item.asn }}/delete">{% trans 'Delete' %}</a>
                             |
-                        <a href="{{ item.asn }}/policy" data-open="exampleModal1" aria-controls="exampleModal1"
-                              aria-haspopup="true" tabindex="0">{% trans 'Make Policy' %}</a>
+                        <a href="{{ item.asn }}/policy">{% trans 'Make Policy' %}</a>
                         |
-                        <a href="{{ item.asn }}/neighbors" data-open="exampleModal1" aria-controls="exampleModal1"
-                              aria-haspopup="true" tabindex="0">{% trans 'List neighbors' %}</a>
+                        <a href="{{ item.asn }}/neighbors">{% trans 'List neighbors' %}</a>
                         |
-                        <a href="{{ item.asn }}/prefixes" data-open="exampleModal1" aria-controls="exampleModal1"
-                              aria-haspopup="true" tabindex="0">{% trans 'List Prefixes' %}</a></p>
+                        <a href="{{ item.asn }}/prefixes">{% trans 'List Prefixes' %}</a></p>
+                        </span>
                     </td>
                 </tr>
             {% endfor %}
+
+
             </tbody>
         </table>
-
-        <div class="js-off-canvas-overlay is-overlay-absolute"></div>
-
+    </div>
+    <!-- /default ordering -->
 {% endblock content %}

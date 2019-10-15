@@ -9,12 +9,16 @@ from .views.asn_policy import MakeAsnPolicy, list_neighbors, delete_neighbors, l
 from .views.signup import signup, activate
 from .views.notifications import view_notifications
 from .views.notification_rules import AddNotificationRule
+from .views.fix_notification import fix_notification
 from .views.setting import Setting
 from django.contrib.auth.decorators import login_required
 
+from django.urls import path
+from .views.setting import ChangeLanguage
+
 urlpatterns = [
     path('', login_required(home), name='home'),
-    path('prefix/add/', login_required(CreatePrefix.as_view()), name='add_prefix'),
+    path('prefix/', login_required(CreatePrefix.as_view()), name='add_prefix'),
     path('prefix/policy/', login_required(MakePolicy.as_view()), name='make_policy'),
     path('prefix/<int:id>/delete/', login_required(delete_prefix)),
     path('prefix/<int:id>/policy/', login_required(prefix_make_policy)),
@@ -33,9 +37,7 @@ urlpatterns = [
 
     path('notifications/', login_required(view_notifications), name='notifications'),
     path('notifications/rules/', login_required(AddNotificationRule.as_view())),
-
-    path('setting/', login_required(Setting.as_view()), name='setting'),
-
+    path('notifications/<int:id>/fix/', login_required(fix_notification)),
 
 
     url(r'^accounts/signup/$', signup, name='signup'),
@@ -44,4 +46,7 @@ urlpatterns = [
 
 
 ]
+
+
+
 

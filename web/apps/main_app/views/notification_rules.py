@@ -1,15 +1,13 @@
-import urllib, json
-from django.http import HttpResponseRedirect
-from django.views.generic import TemplateView
-from django.shortcuts import render, get_object_or_404
-from web.apps.main_app.forms import NotificationRuleForm
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from web.apps.main_app.models import NotificationRule
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
 from django.utils.translation import gettext as _
+from django.views.generic import TemplateView
 
-@login_required
-# @is_user_in_group('Customers')  # for authorization with group name
+from web.apps.main_app.forms import NotificationRuleForm
+from web.apps.main_app.models import NotificationRule
+
+
 def notification_rules(request):
     return render(request, 'notifications/view_rules.html')
 

@@ -6,7 +6,7 @@ class AddNeighborsForm(ModelForm):
 
     class Meta:
         model = Neighbors
-        fields = ['asn', 'left', 'right']
+        fields = ['asn']
 
     def __init__(self, *args, **kwargs):
         super(AddNeighborsForm, self).__init__(*args, **kwargs)

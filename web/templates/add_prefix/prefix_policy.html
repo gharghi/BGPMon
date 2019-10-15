@@ -1,63 +1,94 @@
 {% extends 'generic.html' %}
 
-
 {% load static %}
 {% load i18n %}
 {% block content %}
-{% get_current_language as LANGUAGE_CODE %}
+    {% get_current_language as LANGUAGE_CODE %}
 
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Basic layout-->
+            <form method="POST" action="/prefix/add/policy/">
+                {% csrf_token %}
+                <input type="hidden" name="prefix" value="{{ prefix.id }}">
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">{% trans 'Making Policy for ' %} {{ prefix.prefix }}<a
+                                class="heading-elements-toggle"><i class="icon-more"></i></a></h5>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a data-action="collapse"></a></li>
+                                <li><a data-action="reload"></a></li>
+                                <li><a data-action="close"></a></li>
+                            </ul>
+                        </div>
+                    </div>
 
-        {% include 'message.html' %}
-        {% block messages %}
-        {% endblock messages %}
+                    <div class="panel-body">
 
+                        <div class="form-group">
+                            <a id="SelectAll">{% trans "Select All" %}</a>
+                        </div>
+                        {% if origins.in_db %}
+                            <div class="form-group">
+                                <label class="text-semibold">{% trans 'Originators with route object' %}</label>
+                                <div class="row">
+                                    {% for origin in origins.in_db %}
+                                        <div class="col-md-3">
+                                            <input name="in_db"
+                                                   value="{{ origin }}"
+                                                   type="checkbox"
+                                                   class="styled"
+                                                    {% if origin in saved_origins %}
+                                                   checked="checked"
+                                                   disabled="disabled"
+                                                    {% endif %} >
+                                            &nbsp;AS{{ origin }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if origins.in_bgp %}
+                            <div class="form-group">
+                                <label class="text-semibold">{% trans 'Originators found in BGP' %}</label>
+                                <div class="row">
+                                    {% for origin in origins.in_bgp %}
+                                        <div class="col-md-3">
+                                            <input name="in_bgp"
+                                                   value="{{ origin }}"
+                                                   type="checkbox"
+                                                   class="styled"
+                                                    {% if origin in saved_origins %}
+                                                   checked="checked"
+                                                   disabled="disabled"
+                                                    {% endif %} >
+                                            &nbsp;AS{{ origin }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    <hr>
+                        <div class="form-group">
+                            <div class="row">
+                            <label class="control-label col-md-2">or enter AS Number manually</label>
+                            <div class="col-md-6">
+                                <input type="text" name="origin" class="form-control" placeholder="Example: 48777">
+                            </div>
+                                </div>
+                        </div>
+                        <div class="form-group">
 
-        <h2 class="text-center">{% trans 'Make Prefix Policy' %}</h2>
-        <form data-abide="aqyk5r-abide" novalidate="" method="POST" action="/{{ LANGUAGE_CODE }}/prefix/add/policy/">
-
-            {% csrf_token %}
-                <input type="hidden" name="prefix" value="{{ prefix_id }}">
-            <div class="grid-x grid-margin-x">
-
-                <fieldset class="cell medium-12">
-                    <legend>{% trans 'Originators with route object' %}</legend>
-                    {% if origins.in_db %}
-                        {% for origin in origins.in_db %}
-                            <input  id="checkbox1" type="checkbox" name="in_db" value="{{ origin }}"><label  for="checkbox1">AS{{ origin }}</label>
-                        {% endfor %}
-                    {% endif %}
-
-
-                </fieldset>
-
-            </div>
-            <div class="grid-x grid-margin-x">
-
-               <fieldset class="cell medium-12">
-                    <legend>{% trans 'Originators found in BGP' %}</legend>
-                    {% if origins.in_bgp %}
-                        {% for origin in origins.in_bgp %}
-                            <input  id="checkbox1" type="checkbox" name="in_bgp" value="{{ origin }}"><label  for="checkbox1">AS{{ origin }}</label>
-                        {% endfor %}
-                    {% endif %}
-
-
-                </fieldset>
-
-            </div>
-<a  id="SelectAll" data-open="exampleModal1" aria-controls="exampleModal1" aria-haspopup="true" tabindex="0" >{% trans "Select All" %}</a>
-
-            <div class="grid-x grid-margin-x">
-                <fieldset class="cell medium-6">
-                    <button class="button" type="submit" value="Submit">{% trans 'Continue' %}</button>
-                </fieldset>
-
-            </div>
-        </form>
-
-
-
-
-        <div class="js-off-canvas-overlay is-overlay-absolute"></div>
-
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-primary">{% trans 'Register' %} <i
+                                        class="icon-arrow-right14 position-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- /basic layout -->
+        </div>
+    </div>
 {% endblock content %}

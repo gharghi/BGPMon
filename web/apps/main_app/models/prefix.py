@@ -9,8 +9,8 @@ class IPField(models.BinaryField):
 
 class Prefix(models.Model):
     prefix = models.CharField(max_length=60, validators=[validate_ipv46_network])
-    network = IPField(max_length=60, null=True, validators=[validate_ipv46_address])
-    broadcast = IPField(max_length=60, null=True, validators=[validate_ipv46_address])
+    network = IPField(max_length=60, null=True)
+    broadcast = IPField(max_length=60, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):

@@ -8,7 +8,7 @@ from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 
 from web.apps.main_app.forms import AddAsnForm
-from web.apps.main_app.models import Asn
+from web.apps.main_app.models import Asn, Neighbors
 
 
 # @is_user_in_group('Customers')  # for authorization with group name
@@ -52,9 +52,12 @@ def delete_asn(request, asn):
 
 
 def asn_make_policy(request, asn):
-    asn_object = Asn.objects.filter(asn=asn, user_id=request.user.id)
+    saved_neighbors = {}
+    saved_neighbors['left'] = Neighbors.objects.filter(asn__user__id=request.user.id, asn__asn=asn, type=1).distinct().values_list('neighbor', flat=True)
+    saved_neighbors['right'] = Neighbors.objects.filter(asn__user__id=request.user.id, asn__asn=asn, type=2).distinct().values_list('neighbor', flat=True)
+    asn_object = Asn.objects.filter(asn=asn, user_id=request.user.id).values('id', 'asn')
     neighbors = find_neighbors(asn, request)
-    return render(request, 'asn/neighbors.html', {'neighbors': neighbors, 'asn': asn_object.values()[0]})
+    return render(request, 'asn/neighbors.html', {'neighbors': neighbors, 'saved_neighbors': saved_neighbors, 'asn': asn_object.values()[0]})
 
 
 # fetch list of right and left neighbors of ASN

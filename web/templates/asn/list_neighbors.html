@@ -1,46 +1,87 @@
 {% extends 'generic.html' %}
-
-
 {% load static %}
 {% load i18n %}
 {% block content %}
 
-
-        {% include 'message.html' %}
-        {% block messages %}
-        {% endblock messages %}
-
-
-
-        <h2 class="text-center">{% trans 'List of Asns' %}</h2>
-
-        <table>
+    <div class="row">
+    <div class="col-md-6">
+    <!-- Default ordering -->
+    <div class="panel panel-flat">
+        <div class="panel-heading">
+            <h5 class="panel-title">{% trans 'List of AS' %}{{ neighbors.asn }}{% trans ' Providers' %}</h5>
+            <div class="heading-elements">
+                <ul class="icons-list">
+                    <li><a data-action="collapse"></a></li>
+                    <li><a data-action="reload"></a></li>
+                    <li><a data-action="close"></a></li>
+                </ul>
+            </div>
+        </div>
+        <table class="table datatable-sorting">
             <thead>
             <tr>
-                <th width="200">{% trans 'AS Number' %}</th>
-                <th width="200">{% trans 'Left' %}</th>
-                <th width="200">{% trans 'Right' %}</th>
-                <th width="150">{% trans 'Actions' %}</th>
-
+                <th class="text-center">{% trans 'AS Number' %}</th>
+                <th class="text-center">{% trans 'Left Neighbor' %}</th>
+                <th class="text-center">{% trans 'Actions' %}</th>
             </tr>
             </thead>
             <tbody>
-            {% for neighbor in neighbors %}
-                <tr>
-                    <td>{{ asn }}</td>
-                    <td>{{ neighbor.left }}</td>
-                    <td>{{ neighbor.right }}</td>
-                    <td>
-                        <p><a href="/neighbor/{{ neighbor.id }}/delete/" data-open="exampleModal1"
-                              aria-controls="exampleModal1"
-                              aria-haspopup="true" tabindex="0">{% trans 'Delete' %}</a>
-
+            {% for neighbor in neighbors.left %}
+                <tr role="row" class="{% cycle "odd" "even" %}">
+                    <td>{{ neighbors.asn }}</td>
+                    <td>{{ neighbor.neighbor }}</td>
+                    <td class="text-center"><span>
+                                    <a href="/neighbor/{{ neighbor.id }}/delete/" data-open="exampleModal1"
+                                       aria-controls="exampleModal1"
+                                       aria-haspopup="true" tabindex="0">{% trans 'Delete' %}</a></span>
                     </td>
                 </tr>
             {% endfor %}
+
             </tbody>
         </table>
+    </div>
+    <!-- /default ordering -->
+    </div>
 
-        <div class="js-off-canvas-overlay is-overlay-absolute"></div>
+<div class="col-md-6">
+    <!-- Default ordering -->
+    <div class="panel panel-flat">
+        <div class="panel-heading">
+            <h5 class="panel-title">{% trans 'List of AS' %}{{ neighbors.asn }}{% trans ' Subscribers' %}</h5>
+            <div class="heading-elements">
+                <ul class="icons-list">
+                    <li><a data-action="collapse"></a></li>
+                    <li><a data-action="reload"></a></li>
+                    <li><a data-action="close"></a></li>
+                </ul>
+            </div>
+        </div>
+        <table class="table datatable-sorting">
+            <thead>
+            <tr>
+                <th class="text-center">{% trans 'AS Number' %}</th>
+                <th class="text-center">{% trans 'Right Neighbor' %}</th>
+                <th class="text-center">{% trans 'Actions' %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for neighbor in neighbors.right %}
+                <tr role="row" class="{% cycle "odd" "even" %}">
+                    <td>{{ neighbors.asn }}</td>
+                    <td>{{ neighbor.neighbor }}</td>
+                    <td class="text-center"><span>
+                                    <a href="/neighbor/{{ neighbor.id }}/delete/" data-open="exampleModal1"
+                                       aria-controls="exampleModal1"
+                                       aria-haspopup="true" tabindex="0">{% trans 'Delete' %}</a></span>
+                    </td>
+                </tr>
+            {% endfor %}
 
+            </tbody>
+        </table>
+    </div>
+    <!-- /default ordering -->
+</div>
+    </div>
 {% endblock content %}

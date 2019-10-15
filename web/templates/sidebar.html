@@ -2,39 +2,67 @@
 {% load i18n %}
 {% get_current_language as LANGUAGE_CODE %}
 {% block sidebar %}
-<div id="app-dashboard-sidebar" class="app-dashboard-sidebar position-{% if LANGUAGE_CODE == 'fa' %}right{% elif LANGUAGE_CODE == 'en' %}left{% endif %} off-canvas off-canvas-absolute reveal-for-medium is-transition-push" data-off-canvas="d9zntc-off-canvas" aria-hidden="false">
-      <div class="app-dashboard-sidebar-title-area">
-        <div class="app-dashboard-close-sidebar">
-          <h3 class="app-dashboard-sidebar-block-title">{% trans 'Quick Access' %}</h3>
-          <!-- Close button -->
-          <button id="close-sidebar" data-app-dashboard-toggle-shrink="" class="app-dashboard-sidebar-close-button show-for-medium" aria-label="Close menu" type="button">
-            <span aria-hidden="true"><a href="#"><i class="fas fa-angle-double-left"></i></a></span>
-          </button>
+    <!-- Main sidebar -->
+    <div class="sidebar sidebar-main sidebar-default">
+        <div class="sidebar-content">
+            <!-- Main navigation -->
+            <div class="sidebar-category sidebar-category-visible">
+                <div class="category-title h6">
+                    <span>Main navigation</span>
+                    <ul class="icons-list">
+                        <li><a href="#" data-action="collapse"></a></li>
+                    </ul>
+                </div>
+
+                <div class="category-content sidebar-user">
+                    <div class="media">
+                        <a href="#" class="media-left"><img src="{% static 'assets/images/placeholder.jpg' %}"
+                                                            class="img-circle img-sm" alt=""></a>
+                        <div class="media-body">
+                            <span class="media-heading text-semibold">{% trans 'Hello ' %}{{ request.user.firstname }}</span>
+                            <div class="text-size-mini text-muted">
+                                Welcome to BGPMonitor
+                            </div>
+                        </div>
+
+                        <div class="media-right media-middle">
+                            <ul class="icons-list">
+                                <li>
+                                    <a href="#"><i class="icon-cog3"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-content no-padding">
+                    <ul class="navigation navigation-main navigation-accordion">
+                        <!-- Main -->
+                        <li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main pages"></i>
+                        </li>
+                        <li class="active"><a href="/"><i class="icon-home4"></i>
+                            <span>{% trans "Dashboard" %}</span></a></li>
+                        <li>
+                            <a href="/prefix/"><i class="icon-stack2"></i> <span>{% trans "Prefixes" %}</span></a>
+                        </li>
+                        <li>
+                            <a href="/asn/"><i class="icon-stack2"></i> <span>{% trans "ASNs" %}</span></a>
+                        </li>
+                        <li>
+                            <a href="/notifications/"><i class="icon-stack2"></i>
+                                <span>{% trans "Notifications" %}</span></a>
+                        </li>
+                        <li>
+                            <a href="/notifications/rules/"><i class="icon-stack2"></i>
+                                <span>{% trans "Notification Rules" %}</span></a>
+                        </li>
+                        <!-- /main -->
+                    </ul>
+                </div>
+            </div>
+            <!-- /main navigation -->
+
         </div>
-        <div class="app-dashboard-open-sidebar">
-          <button id="open-sidebar" data-app-dashboard-toggle-shrink="" class="app-dashboard-open-sidebar-button show-for-medium" aria-label="open menu" type="button">
-            <span aria-hidden="true"><a href="#"><i class="fas fa-angle-double-left"></i></a></span>
-          </button>
-        </div>
-      </div>
-      <div class="app-dashboard-sidebar-inner">
-        <ul class="menu vertical">
-          <li><a href="/prefix/add/" class="is-active">
-            <i class="large fa fa-check-square"></i><span class="app-dashboard-sidebar-text">{% trans "Prefixes" %}</span>
-          </a></li>
-          <li><a href="/asn/">
-            <i class="large fa fa-chess-rook"></i><span class="app-dashboard-sidebar-text">{% trans "ASNs" %}</span>
-          </a></li>
-          <li><a href="/notifications/">
-            <i class="large fa fa-bell"></i><span class="app-dashboard-sidebar-text">{% trans "Notifications" %}</span>
-          </a></li>
-          <li><a href="/notifications/rules/" class="is-active">
-            <i class="large fa fa-balance-scale"></i><span class="app-dashboard-sidebar-text">{% trans "Notification Rules" %}</span>
-          </a></li>
-             <li><a href="/setting/" >
-            <i class="large fa fa-cog"></i><span class="app-dashboard-sidebar-text">{% trans "Setting" %}</span>
-          </a></li>
-        </ul>
-      </div>
     </div>
+    <!-- /main sidebar -->
 {% endblock sidebar %}

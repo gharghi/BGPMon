@@ -1,45 +1,118 @@
 {% load static %}
 {% load i18n %}
 {% get_current_language as LANGUAGE_CODE %}
-
-<html class="" lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'fa' %}rtl{% elif  LANGUAGE_CODE == 'en'%}ltr{% endif %}" data-whatinput="mouse" data-whatintent="mouse"><head>
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'fa' %}rtl{% elif  LANGUAGE_CODE == 'en' %}ltr{% endif %}">
+<head>
     <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
- <link href="{% static 'css/all.min.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/foundation.css' %}">
-    <link rel="stylesheet" href="{% static 'css/app.css' %}">
-    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
-    <script src="{% static 'js/vendor/jquery.js' %}"></script>
-<script src="{% static 'js/vendor/what-input.js' %}"></script>
-<script src="{% static 'js/vendor/foundation.js' %}"></script>
-<script src="{% static 'js/app.js' %}"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% trans 'BGPMonitor' %}</title>
 
-  <meta class="foundation-mq"></head>
-  <body>
-    {% block generic %}
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+          type="text/css">
+    <link href="{% static 'assets/css/icons/icomoon/styles.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/core.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/components.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/colors.css' %}" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+
+    <!-- Core JS files -->
+    <script type="text/javascript" src="{% static 'assets/js/plugins/loaders/pace.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/core/libraries/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/core/libraries/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/plugins/loaders/blockui.min.js' %}"></script>
+    <!-- /core JS files -->
+    <script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/pages/datatables_sorting.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/core/app.js' %}"></script>
+    <!-- custom JS files -->
+    <script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+    <!-- /custom JS files -->
+
+</head>
+
+<body class="navbar-bottom">
+
+<!-- Main navbar -->
+<div class="navbar navbar-inverse">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="/"><p class="text-white text-bold ">BGPMonitor</p></a>
+
+        <ul class="nav navbar-nav visible-xs-block">
+            <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+            <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+        </ul>
+    </div>
+
+    <div class="navbar-collapse collapse" id="navbar-mobile">
+        <ul class="nav navbar-nav">
+            <li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a>
+            </li>
+
+        </ul>
+
+
+        <ul class="nav navbar-nav navbar-right">
+
+
+        </ul>
+    </div>
+</div>
+<!-- /main navbar -->
+
+
+<!-- Page header -->
+<div class="page-header">
+
+
+    <div class="page-header-content">
+        <div class="page-title">
+
+        </div>
+
+        <div class="heading-elements">
+            <div class="heading-btn-group">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page header -->
+
+
+{% block generic %}
 
 {% endblock generic %}
 
 
+<!-- Footer -->
+<div class="navbar navbar-default navbar-fixed-bottom footer">
+    <ul class="nav navbar-nav visible-xs-block">
+        <li><a class="text-center collapsed" data-toggle="collapse" data-target="#footer"><i
+                class="icon-circle-up2"></i></a></li>
+    </ul>
 
-<div class="reveal-overlay"><div class="reveal" id="exampleModal1" data-reveal="o5slae-reveal" role="dialog" aria-hidden="true" data-yeti-box="exampleModal1" data-resize="exampleModal1" data-events="resize" style="top: 79px;">
-        <h1>عنوان لایت باکس</h1>
-        <p class="lead">عنوان لید</p>
-        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
-        <button class="close-button" data-close="" aria-label="Close reveal" type="button">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
+    <div class="navbar-collapse collapse" id="footer">
+        <div class="navbar-text">
+            &copy; 2019. <a href="#" class="navbar-link">CopyRighted Shahin</a> by <a href="http://gharghi.ir"
+                                                                                      class="navbar-link"
+                                                                                      target="_blank">gharghi.ir</a>
+        </div>
+
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Terms</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </div>
 </div>
+<!-- /footer -->
 
-<script src="{% static 'js/scripts.js' %}"></script>
-</body></html>
-
-
-
-
-
-
-
+</body>
+</html>

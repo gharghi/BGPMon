@@ -9,47 +9,53 @@ from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext as _
 
 
-@login_required()
 def asn(request):
     return render(request, 'add_prefix/add_prefix.html')
 
 
 class MakePrefixPolicy(TemplateView):
 
-    def get(self, request, *args, **kwargs):
-        origins = Origins.objects.filter(prefix__user__id=request.user.id)
-        prefix = Prefix.objects.filter(user__id=request.user.id)
-        return render(request, 'add_prefix/list_origins.html', {'origins': origins, 'prefix': prefix})
+    # def get(self, request, *args, **kwargs):
+    #     origins = Origins.objects.filter(prefix__user__id=request.user.id)
+    #     prefix = Prefix.objects.filter(user__id=request.user.id)
+    #     return render(request, 'add_prefix/list_origins.html', {'origins': origins, 'prefix': prefix})
 
     def post(self, request, *args, **kwargs):
         try:
-            form = AddOriginsForm(request.POST)
-
-            if form.is_valid():
+            if request.POST.get('origin'):
+                form = AddOriginsForm(request.POST)
+                if form.is_valid():
+                    form.instance.origin = request.POST['origin']
+                    form.instance.save()
+                else:
+                    messages.error(request, form.errors)
+                    return HttpResponseRedirect("/prefix/")
+            else:
                 in_bgp = request.POST.getlist('in_bgp')
                 in_db = request.POST.getlist('in_db')
-                prefix = request.POST.getlist('prefix')
                 for item in in_bgp:
                     form = AddOriginsForm(request.POST)
                     if form.is_valid():
                         form.instance.origin = item
                         form.instance.save()
+                    else:
+                        messages.error(request, form.errors)
+                        return HttpResponseRedirect("/prefix/")
 
                 for item in in_db:
                     form = AddOriginsForm(request.POST)
                     if form.is_valid():
                         form.instance.origin = item
                         form.instance.save()
-                messages.success(request, _('Origins have registered successfully'))
-                return HttpResponseRedirect("/prefix/" + str(prefix[0]) + "/origins/")
-
-            else:
-                messages.error(request, form.errors)
-                return HttpResponseRedirect("/prefix/add/")
+                    else:
+                        messages.error(request, form.errors)
+                        return HttpResponseRedirect("/prefix/")
+            messages.success(request, _('Origins have registered successfully'))
+            return HttpResponseRedirect("/prefix/" + str(request.POST.getlist('prefix')[0]) + "/origins/")
 
         except Exception as e:
             messages.error(request, e)
-            return HttpResponseRedirect("/prefix/add/")
+            return HttpResponseRedirect("/prefix/")
 
 
 def list_origins(request, id):
@@ -61,7 +67,7 @@ def list_origins(request, id):
 
     else:
         messages.error(request, _('There is no result'))
-        return HttpResponseRedirect("/prefix/add/")
+        return HttpResponseRedirect("/prefix/")
 
 
 def delete_origin(request, id):

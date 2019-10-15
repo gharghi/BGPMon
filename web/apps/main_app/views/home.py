@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from web.apps.main_app.models import Asn, Prefix, Notifications
 
 # @is_user_in_group('Customers')  # for authorization with group name

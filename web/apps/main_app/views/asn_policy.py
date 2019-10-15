@@ -4,7 +4,7 @@ import urllib
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView
 from django.shortcuts import render, get_object_or_404
-from web.apps.main_app.models import Neighbors, Asn
+from web.apps.main_app.models import Neighbors, Asn, Prefix, Origins
 from web.apps.jwt_store.models import User
 from web.apps.main_app.forms import AddNeighborsForm
 from django.contrib import messages
@@ -31,15 +31,15 @@ class MakeAsnPolicy(TemplateView):
                 for item in lefts:
                     form = AddNeighborsForm(request.POST)
                     if form.is_valid():
-                        form.instance.left = item
-                        form.instance.right = 0
+                        form.instance.neighbor = item
+                        form.instance.type = 1
                         form.instance.save()
 
                 for item in rights:
                     form = AddNeighborsForm(request.POST)
                     if form.is_valid():
-                        form.instance.right = item
-                        form.instance.left = 0
+                        form.instance.neighbor = item
+                        form.instance.type = 2
                         form.instance.save()
                 messages.success(request, _('Neighbors have registered successfully'))
                 return HttpResponseRedirect("/asn/" + str(asn) +"/neighbors/")
@@ -55,8 +55,11 @@ class MakeAsnPolicy(TemplateView):
 
 
 def list_neighbors(request, asn):
-    neighbors = Neighbors.objects.filter(asn__user__id=request.user.id, asn__asn= asn).distinct()
-    return render(request, 'asn/list_neighbors.html', {'neighbors': neighbors, 'asn': asn})
+    neighbors = {}
+    neighbors['asn'] = asn
+    neighbors['left'] = Neighbors.objects.filter(asn__user__id=request.user.id, asn__asn= asn, type= 1).distinct().values('id', 'neighbor')
+    neighbors['right'] = Neighbors.objects.filter(asn__user__id=request.user.id, asn__asn= asn, type = 2).distinct().values('id', 'neighbor')
+    return render(request, 'asn/list_neighbors.html', {'neighbors': neighbors})
 
 
 def delete_neighbors(request, id):
@@ -77,6 +80,7 @@ def delete_neighbors(request, id):
 
 def list_prefixes(request, asn):
     link = "http://stat.ripe.net/data/announced-prefixes/data.json?resource=" + str(asn)
+    saved_prefixes = Prefix.objects.filter(origins__origin=asn).values_list('prefix', flat= True)
     prefixes = []
     try:
         with urllib.request.urlopen(link, timeout=10) as url:
@@ -89,4 +93,4 @@ def list_prefixes(request, asn):
     for object in data["data"]["prefixes"]:
         prefixes.append(object['prefix'])
 
-    return render(request, 'asn/list_prefixes.html', {'asn':asn, 'prefixes': prefixes})
+    return render(request, 'asn/list_prefixes.html', {'asn':asn, 'prefixes': prefixes, 'saved_prefixes': saved_prefixes})

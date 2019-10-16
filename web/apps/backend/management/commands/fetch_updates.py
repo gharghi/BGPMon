@@ -67,7 +67,7 @@ class Command(BaseCommand):
         for update in updates:
             # print(update)
             #     # Checking if upstream provider is in left asns in database
-            path = update['path'].split(' ')[::-1]
+            path = list(set(update['path'].split(' ')[::-1]))
             asn = path[0]
             #     upstream = path[1]
             #     try:

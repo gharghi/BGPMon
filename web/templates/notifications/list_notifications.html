@@ -40,7 +40,7 @@
                     <td class="text-center">{{ notification.type|status }}</td>
                     <td class="text-center">{{ notification.time|to_date }}</td>
                     <td class="text-center"><span>
-                            {% if notification.status %}
+                            {% if notification.status == 1%}
                                 <span class="text-green">{% trans 'Fixed' %}</span>
 
                             {% else %}

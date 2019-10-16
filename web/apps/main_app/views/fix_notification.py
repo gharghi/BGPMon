@@ -52,6 +52,18 @@ def fix_notification(request, id):
 
                 messages.success(request, 'Notification fixed successfully')
                 return render(request, 'notifications/list_notifications.html')
+            else:
+                prefix = Prefix.objects.get(user=request.user, prefix=notification.prefix)
+                # Creting Policy
+                Origins.objects.create(
+                    prefix=prefix,
+                    origin=notification.asn
+                )
+                # Setting Notification Saved
+                notification.status = 1
+                notification.save()
+                messages.success(request, 'Notification fixed successfully')
+                return render(request, 'notifications/list_notifications.html')
 
         if notification.type is 3:  # Transiting
             # Creating a right neighbor

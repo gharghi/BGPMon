@@ -1,6 +1,7 @@
 import socket
 
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from netaddr import IPNetwork
 
@@ -24,7 +25,7 @@ def fix_notification(request, id):
             notification.status = 1
             notification.save()
             messages.success(request, 'Notification fixed successfully')
-            return render(request, 'notifications/list_notifications.html')
+            return HttpResponseRedirect("/notifications/")
 
         if notification.type is 2:  # Hijacked
             prefix = Prefix.objects.filter(user=request.user, prefix=notification.prefix)
@@ -51,7 +52,8 @@ def fix_notification(request, id):
                 notification.save()
 
                 messages.success(request, 'Notification fixed successfully')
-                return render(request, 'notifications/list_notifications.html')
+                return HttpResponseRedirect("/notifications/")
+
             else:
                 prefix = Prefix.objects.get(user=request.user, prefix=notification.prefix)
                 # Creting Policy
@@ -63,7 +65,7 @@ def fix_notification(request, id):
                 notification.status = 1
                 notification.save()
                 messages.success(request, 'Notification fixed successfully')
-                return render(request, 'notifications/list_notifications.html')
+                return HttpResponseRedirect("/notifications/")
 
         if notification.type is 3:  # Transiting
             # Creating a right neighbor
@@ -78,7 +80,7 @@ def fix_notification(request, id):
             notification.status = 1
             notification.save()
             messages.success(request, 'Notification fixed successfully')
-            return render(request, 'notifications/list_notifications.html')
+            return HttpResponseRedirect("/notifications/")
 
         if notification.type is 4:  # Hijacking
             prefix = Prefix.objects.filter(user=request.user, prefix=notification.prefix)
@@ -105,15 +107,15 @@ def fix_notification(request, id):
                 notification.save()
 
                 messages.success(request, 'Notification fixed successfully')
-                return render(request, 'notifications/list_notifications.html')
+                return HttpResponseRedirect("/notifications/")
 
 
             messages.error(request, 'Notification already fixed')
-            return render(request, 'notifications/list_notifications.html')
+            return HttpResponseRedirect("/notifications/")
 
     except Exception as e:
         messages.error(request, e)
-        return render(request, 'notifications/list_notifications.html')
+        return HttpResponseRedirect("/notifications/")
 
         # asn_id = Asn.objects.filter(user=request.user).filter(asn = notification.asn)
         # if not asn_id:

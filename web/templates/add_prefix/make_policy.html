@@ -1,17 +1,13 @@
 {% extends 'generic.html' %}
-
-
 {% load static %}
 {% load i18n %}
 {% block content %}
-    {% get_current_language as LANGUAGE_CODE %}
 
     <!-- Dashboard content -->
-    <div class="row" xmlns="http://www.w3.org/1999/html">
+    <div class="row">
         <div class="col-md-12">
-
             <!-- Basic layout-->
-            <form method="post">
+            <form method="post" action="/prefix/policy/">
                 {% csrf_token %}
                 <div class="panel panel-flat">
                     <div class="panel-heading">
@@ -25,30 +21,39 @@
                             </ul>
                         </div>
                     </div>
-
                     <div class="panel-body">
                         <div class="form-group">
-                            <label>{% trans 'Found route objects' %}</label>
-                            {% if route_objects %}
-                                {% for route in route_objects %}
-                                    <label>
-                                        <div class="checker border-primary-600 text-primary-800"><span class="checked">
-                                                        <input name="prefix" value="{{ route }}" type="checkbox"
-                                                               class="control-primary"></span></div>
-                                        {{ route }}
-                                    </label>
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
+                            <a id="SelectAll">{% trans "Select All" %}</a>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-semibold">{% trans 'Found route objects' %}</label>
+                            <div class="row">
+                                {% if route_objects %}
+                                    {% for route in route_objects %}
 
-                        <a id="SelectAll" data-open="exampleModal1" aria-controls="exampleModal1" aria-haspopup="true"
-                           tabindex="0">{% trans "Select All" %}</a>
-                        <div class="text-right">
-                            <button type="submit" class="btn btn-primary">{% trans 'Continue' %} <i
-                                    class="icon-arrow-left13 position-right"></i></button>
+
+                                        <div class="col-md-3">
+                                            <input name="prefix"
+                                                   value="{{ route }}"
+                                                   type="checkbox"
+                                                   class="styled"
+                                                    {% if route in saved_prefixes %}
+                                                   checked="checked"
+                                                   disabled="disabled"
+                                                    {% endif %}
+                                            >
+                                            &nbsp;{{ route }}
+                                        </div>
+
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-primary">{% trans 'Continue' %} <i
+                                        class="icon-arrow-right13 position-right"></i></button>
+                            </div>
                         </div>
                     </div>
-                </div>
             </form>
             <!-- /basic layout -->
         </div>

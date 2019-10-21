@@ -80,7 +80,7 @@ def delete_neighbors(request, id):
 
 def list_prefixes(request, asn):
     link = "http://stat.ripe.net/data/announced-prefixes/data.json?resource=" + str(asn)
-    saved_prefixes = Prefix.objects.filter(origins__origin=asn).values_list('prefix', flat= True)
+    saved_prefixes = Prefix.objects.filter(origins__origin=asn, user=request.user).values_list('prefix', flat= True)
     prefixes = []
     try:
         with urllib.request.urlopen(link, timeout=10) as url:

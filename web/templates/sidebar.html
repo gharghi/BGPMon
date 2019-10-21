@@ -19,7 +19,7 @@
                         <a href="#" class="media-left"><img src="{% static 'assets/images/placeholder.jpg' %}"
                                                             class="img-circle img-sm" alt=""></a>
                         <div class="media-body">
-                            <span class="media-heading text-semibold">{% trans 'Hello ' %}{{ request.user.firstname }}</span>
+                            <span class="media-heading text-semibold">{% trans 'Hello ' %}{{ request.user.first_name }}</span>
                             <div class="text-size-mini text-muted">
                                 Welcome to BGPMonitor
                             </div>
@@ -43,13 +43,13 @@
                         <li class="active"><a href="/"><i class="icon-home4"></i>
                             <span>{% trans "Dashboard" %}</span></a></li>
                         <li>
-                            <a href="/prefix/"><i class="icon-stack2"></i> <span>{% trans "Prefixes" %}</span></a>
+                            <a href="/prefix/"><i class="glyphicon glyphicon-th-list"></i> <span>{% trans "Prefixes" %}</span></a>
                         </li>
                         <li>
-                            <a href="/asn/"><i class="icon-stack2"></i> <span>{% trans "ASNs" %}</span></a>
+                            <a href="/asn/"><i class="glyphicon glyphicon-flag"></i> <span>{% trans "ASNs" %}</span></a>
                         </li>
                         <li>
-                            <a href="/notifications/"><i class="icon-stack2"></i>
+                            <a href="/notifications/"><i class="glyphicon glyphicon-ok"></i>
                                 <span>{% trans "Notifications" %}</span></a>
                         </li>
                         <li>

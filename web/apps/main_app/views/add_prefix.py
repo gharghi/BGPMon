@@ -84,11 +84,12 @@ class CreatePrefix(TemplateView):
             if form.is_valid():
                 user_prefix = form.cleaned_data["prefix"]
                 route_objects = find_route_objects(user_prefix, request)
-                asns = find_advertised_asn(user_prefix)
-                return render(request, 'add_prefix/make_policy.html', {'route_objects': route_objects, 'asns': asns})
+                # asns = find_advertised_asn(user_prefix)
+                saved_prefixes = Prefix.objects.filter(user=request.user).values_list('prefix', flat=True)
+                return render(request, 'add_prefix/make_policy.html', {'route_objects': route_objects, 'saved_prefixes':saved_prefixes})
 
         except Exception as e:
-            messages.error(request, e)
+            messages.error(request, 'There is an unusual error!')
             return render(request, 'add_prefix/add_prefix.html', {'add_prefix_form': add_prefix})
 
 
@@ -111,9 +112,9 @@ def find_route_objects(prefix, request):
     return objects
 
 
-def find_advertised_asn(asn):
-    asns = {'AS43754': 43754}
-    return asns
+# def find_advertised_asn(asn):
+#     asns = {'AS43754': 43754}
+#     return asns
 
 
 def delete_prefix(request, id):

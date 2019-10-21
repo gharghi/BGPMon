@@ -144,7 +144,8 @@ class Command(BaseCommand):
                         print("error, has been transited ", insert_notifications(notification))
 
                     # Checking if ASN is advertising prefix that is not in database
-                    query = "select prefix.prefix as prefix, origins.origin as origin, prefix.user_id as user from main_app_prefix as prefix inner join main_app_origins as origins on origins.prefix_id = prefix.id where prefix.prefix = '" + prefix + "' and origins.origin = " + asn
+                    prefix_net = update['prefix'].split('/')[0]
+                    query = "select prefix.prefix as prefix, origins.origin as origin, prefix.user_id as user from main_app_prefix as prefix inner join main_app_origins as origins on origins.prefix_id = prefix.id where prefix.network <= INET6_ATON(\"" + prefix_net + "\") and prefix.broadcast >= INET6_ATON(\"" + prefix_net + "\") and origins.origin = " + str(asn)
                     cs.execute(query)
                     if not cs.rowcount:
                         notification = {'path': update['path'], 'time': update['time'], 'asn': asn, 'prefix': prefix,

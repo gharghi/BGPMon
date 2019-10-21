@@ -35,9 +35,9 @@ def insert_notifications(notification):
                 users.append(path_users)
 
     for user in users:
-        query = "insert into main_app_notifications (user_id, type, path, prefix, asn, time, status) values ( " + str(
+        query = "insert into main_app_notifications (user_id, type, path, prefix, asn, time, status, emailed) values ( " + str(
             user[0]) + " , " + str(notification['type']) + ",\"" + notification['path'] + "\",\"" + notification[
-                    'prefix'] + "\"," + str(notification['asn']) + "," + str(notification['time']) + ",0)"
+                    'prefix'] + "\"," + str(notification['asn']) + "," + str(notification['time']) + ",0, 0)"
         cs.execute(query)
         if cs.rowcount:
             return True, notification
@@ -88,21 +88,28 @@ class Command(BaseCommand):
             # prefix = update['prefix']
             try:
                 prefix_net = update['prefix'].split('/')[0]
-                query = "select prefix from main_app_prefix where network <= INET6_ATON('" + prefix_net + "') and broadcast >= INET6_ATON('" + prefix_net + "')"
+                query = "select id,prefix from main_app_prefix where network <= INET6_ATON(\"" + prefix_net + "\") and broadcast >= INET6_ATON(\"" + prefix_net + "\")"
                 cs.execute(query)
                 if cs.rowcount:
                     rows = cs.fetchall()
                     for row in rows:
-                        prefix_supernet = row[0]
-                        query = "select origins.origin as origin, prefix.prefix as prefix, prefix.user_id as user from main_app_origins as origins " \
-                                "inner join main_app_prefix as prefix on origins.prefix_id = prefix.id where prefix.prefix = '" + prefix_supernet + \
-                                "' and origins.origin = " + asn
+                        prefix_id = row[0]
+                        query = "select id from main_app_origins where prefix_id = " + str(prefix_id) + " and origin = " + str(asn)
+                        # query = "select origins.origin as origin, prefix.prefix as prefix, prefix.user_id as user from main_app_origins as origins " \
+                        #         "inner join main_app_prefix as prefix on origins.prefix_id = prefix.id where prefix.i = '" + prefix_supernet + \
+                                # "' and origins.origin = " + asn
                         cs.execute(query)
-                        if not cs.rowcount:
-                            notification = {'path': update['path'], 'time': update['time'], 'asn': asn,
-                                            'prefix': update['prefix'],
-                                            'type': 2}
-                            print("error, has been hijacked ", insert_notifications(notification))
+                        if cs.rowcount:
+                            flag = 0
+                            break
+                        else:
+                            flag = 1
+
+                    if flag:
+                        notification = {'path': update['path'], 'time': update['time'], 'asn': asn,
+                                        'prefix': update['prefix'],
+                                        'type': 2}
+                        print("error, has been hijacked ", insert_notifications(notification))
             except Exception as e:
                 print(e, 'Error on line {}'.format(sys.exc_info()[-1].tb_lineno))
 

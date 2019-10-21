@@ -9,8 +9,8 @@ class Notifications(models.Model):
     path = models.TextField(max_length=500, null=True)
     prefix = models.CharField(max_length=60, null=True)
     asn = models.IntegerField(null=True)
-    status = models.BooleanField(default=0)
-    emailed = models.BooleanField(default=0)
+    status = models.BooleanField(default=False)
+    emailed = models.BooleanField(default=False)
     time = models.BigIntegerField()
 
     def __str__(self):

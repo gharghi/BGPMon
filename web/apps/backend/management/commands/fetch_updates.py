@@ -67,8 +67,9 @@ class Command(BaseCommand):
         for update in updates:
             # print(update)
             #     # Checking if upstream provider is in left asns in database
-            path = list(set(update['path'].split(' ')[::-1]))
+            path = update['path'].split(' ')[::-1]
             asn = path[0]
+            # path = path[::-1]
             #     upstream = path[1]
             #     try:
             #         query = "select neighbors.neighbor, asn.asn as asn, asn.user_id as user " \
@@ -129,6 +130,7 @@ class Command(BaseCommand):
         for update in updates:
             asn = str(update['asn'])
             path = update['path'].split(' ')[::-1]
+            ###########unique path##################
             prefix = update['prefix']
             try:
                 if path.index(asn) is 0:

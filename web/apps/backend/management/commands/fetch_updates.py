@@ -7,6 +7,15 @@ from django.db import connection
 
 from web.apps.main_app.models import Asn, Prefix
 
+# Makes the AS Path unique by duplicate sequence ASNs
+def unique_path(path):
+    path = path.split(' ')
+    unique = []
+    for i in range(len(path)):
+        if path[i] != path[i-1]:
+            unique.append(path[i])
+    return ' '.join(unique)
+
 def insert_notifications(notification):
     cs = connection.cursor()
     asn_user = Asn.objects.filter(asn=notification['asn']).values_list('user_id', flat=True)
@@ -36,7 +45,7 @@ def insert_notifications(notification):
 
     for user in users:
         query = "insert into main_app_notifications (user_id, type, path, prefix, asn, time, status, emailed) values ( " + str(
-            user[0]) + " , " + str(notification['type']) + ",\"" + notification['path'] + "\",\"" + notification[
+            user[0]) + " , " + str(notification['type']) + ",\"" + unique_path(notification['path']) + "\",\"" + notification[
                     'prefix'] + "\"," + str(notification['asn']) + "," + str(notification['time']) + ",0, 0)"
         cs.execute(query)
         if cs.rowcount:
@@ -51,7 +60,6 @@ class Command(BaseCommand):
         # Creating list of updates
         cs = connection.cursor()
         os.system('/bin/bash ' + settings.BASE_DIR + '/apps/backend/management/commands/import_updates.sh')
-
         # searching announced prefixes in our database
         updates = []
         query = "select prefix.prefix, dump.asn, dump.path, dump.time, dump.prefix from main_app_prefix as prefix inner join " \
@@ -61,32 +69,12 @@ class Command(BaseCommand):
         rows = cs.fetchall()
         for item in rows:
             updates.append({'prefix': item[4], 'asn': item[1], 'path': item[2], 'time': item[3]})
-        # print(updates)
 
-        # It double checks the transiting with prefixes. not important
         for update in updates:
-            # print(update)
-            #     # Checking if upstream provider is in left asns in database
+            # Checking if upstream provider is in left asns in database
             path = update['path'].split(' ')[::-1]
             asn = path[0]
-            # path = path[::-1]
-            #     upstream = path[1]
-            #     try:
-            #         query = "select neighbors.neighbor, asn.asn as asn, asn.user_id as user " \
-            #                 "from main_app_neighbors as neighbors inner join main_app_asn as asn on neighbors.asn_id = asn.id where " \
-            #                 " neighbors.type = 1 and asn.asn = " + str(asn) + " and neighbors.neighbor = " + str(upstream)
-            #         cs.execute(query)
-            #     except Exception as e:
-            #         print(e)
-            #
-            #     if not cs.rowcount:
-            #         notification = {'path': update['path'], 'time': update['time'], 'asn': asn, 'prefix': update['prefix'],
-            #                         'type': 1}
-            #
-            #         print("error, has been transited ", insert_notifications(notification))
 
-            # Checking if prefix is announcing with other ASNs that are not in database
-            # prefix = update['prefix']
             try:
                 prefix_net = update['prefix'].split('/')[0]
                 query = "select id,prefix from main_app_prefix where network <= INET6_ATON(\"" + prefix_net + "\") and broadcast >= INET6_ATON(\"" + prefix_net + "\")"
@@ -96,9 +84,6 @@ class Command(BaseCommand):
                     for row in rows:
                         prefix_id = row[0]
                         query = "select id from main_app_origins where prefix_id = " + str(prefix_id) + " and origin = " + str(asn)
-                        # query = "select origins.origin as origin, prefix.prefix as prefix, prefix.user_id as user from main_app_origins as origins " \
-                        #         "inner join main_app_prefix as prefix on origins.prefix_id = prefix.id where prefix.i = '" + prefix_supernet + \
-                                # "' and origins.origin = " + asn
                         cs.execute(query)
                         if cs.rowcount:
                             flag = 0
@@ -167,4 +152,4 @@ class Command(BaseCommand):
             except Exception as e:
                 print(e)
         # run the send mail command
-        # return render(request, 'notify/send_mail.html')
+

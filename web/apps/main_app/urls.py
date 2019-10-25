@@ -1,6 +1,8 @@
 from django.urls import path
 from django.conf.urls import url
 
+from web.apps.main_app.views.profile.change_password import change_password
+from web.apps.main_app.views.profile.edit import EditProfile
 from .views.home import home
 from .views.add_prefix import CreatePrefix, MakePolicy, delete_prefix, prefix_make_policy, AddPrefixPolicy
 from .views.prefix_policy import MakePrefixPolicy, list_origins, delete_origin
@@ -39,6 +41,8 @@ urlpatterns = [
     path('notifications/rules/', login_required(AddNotificationRule.as_view())),
     path('notifications/<int:id>/fix/', login_required(fix_notification)),
 
+    path('profile/', login_required(EditProfile.as_view()), name='edit_profile'),
+    path('changePassword/', login_required(change_password), name='change_password'),
 
     url(r'^accounts/signup/$', signup, name='signup'),
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',

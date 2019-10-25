@@ -33,11 +33,9 @@
             {% for obj in output.notif_history %}
                 data.push({'date': convertDate({{obj.time}}), 'count':{{ obj.count }}});
             {% endfor %}
-            console.log(data);
             lineChart(data);
         });
     </script>
-    {{ output.notif_history }}
     <div class="content-wrapper">
         <div class="row">
             <div class="col-md-12">

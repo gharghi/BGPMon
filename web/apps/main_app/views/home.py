@@ -7,5 +7,11 @@ def home(request):
     asns = Asn.objects.filter(user= request.user).count()
     prefixes = Prefix.objects.filter(user= request.user).count()
     notifications = Notifications.objects.filter(user__id=request.user.id).count()
-    notifications_count = Notifications.objects.filter(user__id=request.user.id).values('time').annotate(count=Count('id'))
-    return render(request, 'index.html', {'asns':asns, 'prefixes':prefixes, 'notifications':notifications, 'notifications_count':notifications_count})
+    notif_history = Notifications.objects.filter(user__id=request.user.id).values('time').annotate(count=Count('id'))
+    output = {
+        'asns': asns,
+        'prefixes': prefixes,
+        'notifications': notifications,
+        'notif_history': notif_history
+    }
+    return render(request, 'index.html', {'output': output})

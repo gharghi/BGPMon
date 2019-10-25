@@ -6,7 +6,7 @@ class NotificationRuleForm(ModelForm):
 
     class Meta:
         model = NotificationRule
-        fields = ['user', 'phone', 'email', 'telegram', 'hijacked', 'hijacking', 'transited', 'transiting']
+        fields = ['user', 'phone', 'email', 'hijacked', 'hijacking', 'transited', 'transiting']
 
     def __init__(self, *args, **kwargs):
         super(NotificationRuleForm, self).__init__(*args, **kwargs)

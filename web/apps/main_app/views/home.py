@@ -1,5 +1,4 @@
-from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Count
 from django.shortcuts import render, redirect
 from web.apps.main_app.models import Asn, Prefix, Notifications
 
@@ -8,4 +7,5 @@ def home(request):
     asns = Asn.objects.filter(user= request.user).count()
     prefixes = Prefix.objects.filter(user= request.user).count()
     notifications = Notifications.objects.filter(user__id=request.user.id).count()
-    return render(request, 'index.html', {'asns':asns, 'prefixes':prefixes, 'notifications':notifications})
+    notifications_count = Notifications.objects.filter(user__id=request.user.id).values('time').annotate(count=Count('id'))
+    return render(request, 'index.html', {'asns':asns, 'prefixes':prefixes, 'notifications':notifications, 'notifications_count':notifications_count})

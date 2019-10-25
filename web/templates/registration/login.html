@@ -2,7 +2,8 @@
 {% load i18n %}
 {% get_current_language as LANGUAGE_CODE %}
 <!doctype html>
-<html class="no-js" lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'fa' %}rtl{% elif  LANGUAGE_CODE == 'en'%}ltr{% endif %}" >
+<html class="no-js" lang="{{ LANGUAGE_CODE }}"
+      dir="{% if LANGUAGE_CODE == 'fa' %}rtl{% elif  LANGUAGE_CODE == 'en' %}ltr{% endif %}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -15,38 +16,13 @@
 </head>
 <body>
 <div class="grid-container full login-page">
-
-
     <div class="login-wrap">
         <div class="login-html">
-            {% if form.errors %}
-                <p>Your username and password didn't match. Please try again.</p>
-            {% endif %}
-{% block messages %}
-    {% if messages %}
-
-        {% for message in messages %}
-            <span class="
-        {% if 'success' in message.tags %}
-            success
-        {% elif 'error' in message.tags %}
-            alert
-        {% elif 'info' in message.tags %}
-            primary
-        {% elif 'warning' in message.tags %}
-            warning
-        {% endif %}
-        label">{{ message }}</span>
-        {% endfor %}
-    {% endif %}
-{% endblock messages %}
-
             <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1"
                                                                                      class="tab">{% trans 'Login' %}</label>
             <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2"
                                                                              class="tab">{% trans 'Register' %}</label>
             <div class="login-form">
-
                 <form method="post" action="{% url 'login' %}">
                     {% csrf_token %}
                     <div class="sign-in-htm">
@@ -58,15 +34,29 @@
                             <label for="pass" class="label">{% trans 'Password' %}</label>
                             <input id="pass" type="password" name="password" class="input" data-type="password">
                         </div>
-                        <div class="group">
-                            <input id="check" type="checkbox" class="check" checked>
-                            <label for="check"><span class="icon"></span> {% trans '`Remember me' %}</label>
-                        </div>
+                        {#                        <div class="group">#}
+                        {#                            <input id="check" type="checkbox" class="check" checked>#}
+                        {#                            <label for="check"><span class="icon"></span> {% trans '`Remember me' %}</label>#}
+                        {#                        </div>#}
                         <div class="group">
                             <input type="submit" class="button" value="{% trans 'Login' %}">
                         </div>
-
                         <div class="hr"></div>
+                        <div class="group text-white text-bold" style="color: yellow; font-weight: bold;">
+                            {% if form.non_field_errors %}
+                                {% for error in form.non_field_errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            {% endif %}
+
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <p >
+                                        {{ message }}
+                                    </p>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
                         <div class="foot-lnk">
                             <a href="{% url 'password_reset' %}">{% trans 'Forgot password?' %}</a>
                         </div>
@@ -103,12 +93,9 @@
                     <input type="hidden" name="next" value="signup"/>
                 </form>
             </div>
-
         </div>
     </div>
-
 </div>
-
 <script src="{% static 'js/vendor/jquery.js' %}"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
 <script src="{% static 'js/morris.js' %}"></script>

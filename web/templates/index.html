@@ -1,72 +1,146 @@
 {% extends 'generic.html' %}
-
-
 {% load static %}
 {% load i18n %}
 {% block content %}
 
+        <script type="text/javascript" src="{% static 'js/d3.v4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/charts.js' %}"></script>
+<style>
 
+ .line {
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+    }
+.zoom {
+  cursor: move;
+  fill: none;
+  pointer-events: all;
+}
 
+</style>
+<script>
+$(document).ready(function () {
+    function convertDate(t){
+        var dt = new Date(t*1000);
+        var yr = dt.getFullYear();
+        var mt = dt.getMonth();
+        var dy = dt.getDay();
 
+var hr = dt.getHours();
+var m = "0" + dt.getMinutes();
 
+return yr + '-' + mt + '-' + dy + ' ' + hr+ ':' + m.substr(-2);
 
-<div class="content-wrapper">
+    }
 
-<div class="row">
+    data = [];
+    {% for obj in notifications_count %}
+        data.push({'date':convertDate({{obj.time}}), 'count':{{ obj.count }}});
+    {% endfor %}
+    lineChart(data);
+});
+</script>
+    <div class="content-wrapper">
 
+        <div class="row">
+					<div class="col-md-12">
 
-<div class="col-md-6">
-    <div class="panel panel-flat">
-        <div class="panel-heading">
-								<h6 class="panel-title text-semibold"> {% trans 'Number of ASNs' %} <a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-								<div class="heading-elements">
-									<ul class="icons-list">
-				                		<li><a data-action="collapse"></a></li>
-				                		<li><a data-action="reload"></a></li>
-				                		<li><a data-action="close"></a></li>
-				                	</ul>
-			                	</div>
-							</div>
-        <div class="panel-body">
-            <h1>{{ asns }}</h1>
-    </div>
+					 <div class="panel panel-flat" >
+                    <div class="panel-heading">
+                        <h6 class="panel-title text-semibold"> {% trans 'History of notifications for your resources' %} <a
+                                class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a data-action="collapse"></a></li>
+                                <li><a data-action="reload"></a></li>
+                                <li><a data-action="close"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-body" id="chart" style="width: 1000px;">
+
+                    </div>
+                </div>
+
+					</div>
         </div>
-</div>
-    <div class="col-md-6">
-        <div class="panel panel-flat">
-            <div class="panel-heading">
-								<h6 class="panel-title text-semibold">{% trans 'Number of Prefixes' %}<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-								<div class="heading-elements">
-									<ul class="icons-list">
-				                		<li><a data-action="collapse"></a></li>
-				                		<li><a data-action="reload"></a></li>
-				                		<li><a data-action="close"></a></li>
-				                	</ul>
-			                	</div>
-							</div>
-             <div class="panel-body">
-                 <h1>{{ prefixes }}</h1>
-             </div>
-            </div>
-    </div>
-    <div class="col-md-6">
-        <div class="panel panel-flat">
-            <div class="panel-heading">
-								<h6 class="panel-title text-semibold">{% trans 'Number of Notifications' %}<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-								<div class="heading-elements">
-									<ul class="icons-list">
-				                		<li><a data-action="collapse"></a></li>
-				                		<li><a data-action="reload"></a></li>
-				                		<li><a data-action="close"></a></li>
-				                	</ul>
-			                	</div>
-							</div>
-             <div class="panel-body">
- <h1>{{ notifications }}</h1>
-             </div>
-    </div>
-</div>
 
-</div>
-</div>
+    <div class="row">
+					<div class="col-md-6">
+
+					 <div class="panel panel-flat" >
+                    <div class="panel-heading">
+                        <h6 class="panel-title text-semibold"> {% trans 'Number of ASNs' %} <a
+                                class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a data-action="collapse"></a></li>
+                                <li><a data-action="reload"></a></li>
+                                <li><a data-action="close"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+
+                        <h1>{{ asns }}</h1>
+                    </div>
+                </div>
+
+					</div>
+
+					<div class="col-md-6">
+
+				<div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h6 class="panel-title text-semibold">{% trans 'Number of Prefixes' %}<a
+                                class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a data-action="collapse"></a></li>
+                                <li><a data-action="reload"></a></li>
+                                <li><a data-action="close"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <h1>{{ prefixes }}</h1>
+                    </div>
+                </div>
+
+					</div>
+				</div>
+
+            <div class="row">
+					<div class="col-md-6">
+
+					  <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h6 class="panel-title text-semibold">{% trans 'Number of Notifications' %}<a
+                                class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a data-action="collapse"></a></li>
+                                <li><a data-action="reload"></a></li>
+                                <li><a data-action="close"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <h1>{{ notifications }}</h1>
+                    </div>
+                </div>
+
+					</div>
+
+					<div class="col-md-6">
+
+
+
+					</div>
+				</div>
+
+
+
+    </div>
 {% endblock content %}

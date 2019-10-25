@@ -6,8 +6,8 @@ from web.apps.main_app.models import Asn, Prefix, Notifications
 def home(request):
     asns = Asn.objects.filter(user= request.user).count()
     prefixes = Prefix.objects.filter(user= request.user).count()
-    notifications = Notifications.objects.filter(user__id=request.user.id).count()
-    notif_history = Notifications.objects.filter(user__id=request.user.id).values('time').annotate(count=Count('id'))
+    notifications = Notifications.objects.filter(user=request.user).count()
+    notif_history = Notifications.objects.filter(user=request.user).values('time').annotate(count=Count('id'))
     output = {
         'asns': asns,
         'prefixes': prefixes,

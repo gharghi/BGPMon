@@ -29,7 +29,7 @@
                 var m = "0" + dt.getMinutes();
                 return yr + '-' + mt + '-' + dy + ' ' + hr + ':' + m.substr(-2);
             }
-            data = [];
+            var data = [];
             {% for obj in output.notif_history %}
                 data.push({'date': convertDate({{obj.time}}), 'count':{{ obj.count }}});
             {% endfor %}

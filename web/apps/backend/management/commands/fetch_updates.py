@@ -144,7 +144,7 @@ class Command(BaseCommand):
                             path[1] + " and neighbors.type = 2 and neighbors.neighbor = " + right
                     cs.execute(query)
                     if not cs.rowcount:
-                        notification = {'path': update['path'], 'time': update['time'], 'asn': asn, 'prefix': prefix,
+                        notification = {'path': update['path'], 'time': update['time'], 'asn': path[0], 'prefix': prefix,
                                         'type': 3}
                         print("error, is transiting ", insert_notifications(notification))
                 # else:

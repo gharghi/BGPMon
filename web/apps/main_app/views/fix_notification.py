@@ -17,7 +17,7 @@ def fix_notification(request, id):
             path = notification.path.split(' ')[::-1]
             asn_index = path.index(str(notification.asn))
             Neighbors.objects.create(
-                asn=Asn.objects.get(asn=notification.asn),
+                asn=Asn.objects.get(asn=notification.asn,user=request.user),
                 neighbor=int(path[asn_index + 1]),
                 type=1,
             )
@@ -72,7 +72,7 @@ def fix_notification(request, id):
             path = notification.path.split(' ')[::-1]
             asn_index = path.index(str(notification.asn))
             Neighbors.objects.create(
-                asn=Asn.objects.get(asn=notification.asn),
+                asn=Asn.objects.get(asn=notification.asn,user=request.user),
                 neighbor=int(path[asn_index - 1]),
                 type=2,
             )

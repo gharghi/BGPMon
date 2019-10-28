@@ -77,7 +77,7 @@ class CreatePrefix(TemplateView):
     def post(self, request, *args, **kwargs):
         try:
             if not request.POST['prefix']:
-                messages.success(request, _('Please enter a valid prefix'))
+                messages.error(request, _('Please enter a valid prefix'))
                 return HttpResponseRedirect("/prefix/")
 
             form = AddPrefixForm(request.POST)

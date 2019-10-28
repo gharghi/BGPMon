@@ -15,44 +15,58 @@
                 </ul>
             </div>
         </div>
-
-
         <table class="table datatable-sorting">
             <thead>
             <tr>
+                <th width="5"></th>
                 <th width="150">{% trans 'Prefix' %}</th>
                 <th class="text-center">{% trans 'Originator' %}</th>
                 <th class="text-center">{% trans 'Path' %}</th>
                 <th class="text-center">{% trans 'Type' %}</th>
                 <th class="text-center">{% trans 'Time' %}</th>
                 <th class="text-center">{% trans 'Action' %}</th>
-
-
             </tr>
             </thead>
             <tbody>
-
             {% for notification in notifications %}
-                <tr role="row" class="{% cycle "odd" "even" %}">
-                    <td class="text-center">{{ notification.prefix }}</td>
-                    <td class="text-center">{{ notification.asn }}</td>
-                    <td class="text-center">{{ notification.path }}</td>
-                    <td class="text-center">{{ notification.type|status }}</td>
-                    <td class="text-center">{{ notification.time|to_date }}</td>
+
+                <tr role="row">
+                    <td>
+                         <ul class="icons-list">
+                            <li class="dropdown ">
+                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                    <i class="icon-menu9"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-left">
+                                    {% for path in notification.5|separate %}
+                                        <li><a><i class="icon"></i> {{ path }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </td>
+                    <td class="text-center">{{ notification.1 }}</td>
+                    <td class="text-center">{{ notification.2 }}</td>
+                    <td class="text-center">{{ notification.5|path_summary }}
+
+                    </td>
+                    <td class="text-center">{{ notification.3|status }}</td>
+                    <td class="text-center">{{ notification.4|to_date }}</td>
                     <td class="text-center"><span>
-                            {% if notification.status == 1%}
+                            {% if notification.status == 1 %}
                                 <span class="text-green">{% trans 'Fixed' %}</span>
 
                             {% else %}
-                                <a href="/notifications/{{ notification.id }}/fix">{% trans 'Fix' %}
+                                <a onclick="fixNotification({{ notification.0 }}, this);">{% trans 'Fix' %}
                             {% endif %}
-                            </a></span></td>
-
-
+                        </a></span></td>
                 </tr>
+
+
+
+
+
             {% endfor %}
-
-
             </tbody>
         </table>
     </div>

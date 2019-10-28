@@ -131,17 +131,32 @@ class Command(BaseCommand):
             path = update['path'].split(' ')[::-1]
             ###########unique path##################
             prefix = update['prefix']
+            path_index = path.index(asn)
+            upstream = path[path_index + 1]
+            downstream = path[path_index - 1]
             try:
-                if path.index(asn) is 0:
+                # if path.index(asn) is 0:
                     # Checking if upstream provider is in left asns in database
-                    upstream = path[1]
-                    query = "select neighbors.neighbor, asn.asn as asn, asn.id as asn_id, asn.user_id as user from main_app_neighbors as neighbors inner join main_app_asn as asn on neighbors.asn_id = asn.id where asn.asn = " + asn + " and neighbors.type = 1 and neighbors.neighbor = " + upstream
-                    cs.execute(query)
-                    if not cs.rowcount:
-                        notification = {'path': update['path'], 'time': update['time'], 'asn': asn, 'prefix': prefix,
-                                        'type': 1}
-                        print("error, has been transited ", insert_notifications(notification))
+                    # upstream = path[1]
+                query = "select neighbors.neighbor, asn.asn as asn, asn.id as asn_id, asn.user_id as user from main_app_neighbors as neighbors inner join main_app_asn as asn on neighbors.asn_id = asn.id where asn.asn = " + asn + " and neighbors.type = 1 and neighbors.neighbor = " + upstream
+                cs.execute(query)
+                if not cs.rowcount:
+                    notification = {'path': update['path'], 'time': update['time'], 'asn': asn, 'prefix': prefix,
+                                    'type': 1}
+                    print("error, has been transited ", insert_notifications(notification))
 
+                    # Checking if right ASNs are in database as right hand
+                    # right = path[0]
+                query = "select neighbors.neighbor as right_neighbor, asn.asn as asn, asn.user_id as user from main_app_neighbors as neighbors inner join main_app_asn as asn on neighbors.asn_id = asn.id where asn.asn = " + \
+                        path[1] + " and neighbors.type = 2 and neighbors.neighbor = " + downstream
+                cs.execute(query)
+                if not cs.rowcount:
+                    notification = {'path': update['path'], 'time': update['time'], 'asn': path[0],
+                                    'prefix': prefix,
+                                    'type': 3}
+                    print("error, is transiting ", insert_notifications(notification))
+
+                if path_index is 0:
                     # Checking if ASN is advertising prefix that is not in database
                     prefix_net = update['prefix'].split('/')[0]
                     query = "select prefix.prefix as prefix, origins.origin as origin, prefix.user_id as user from main_app_prefix as prefix inner join main_app_origins as origins on origins.prefix_id = prefix.id where prefix.network <= INET6_ATON(\"" + prefix_net + "\") and prefix.broadcast >= INET6_ATON(\"" + prefix_net + "\") and origins.origin = " + str(asn)
@@ -151,16 +166,8 @@ class Command(BaseCommand):
                                         'type': 4}
                         print("error, is hijacking ", insert_notifications(notification))
 
-                elif path.index(asn) is 1:
-                    # Checking if right ASNs are in database as right hand
-                    right = path[0]
-                    query = "select neighbors.neighbor as right_neighbor, asn.asn as asn, asn.user_id as user from main_app_neighbors as neighbors inner join main_app_asn as asn on neighbors.asn_id = asn.id where asn.asn = " + \
-                            path[1] + " and neighbors.type = 2 and neighbors.neighbor = " + right
-                    cs.execute(query)
-                    if not cs.rowcount:
-                        notification = {'path': update['path'], 'time': update['time'], 'asn': path[0], 'prefix': prefix,
-                                        'type': 3}
-                        print("error, is transiting ", insert_notifications(notification))
+                # elif path.index(asn) is 1:
+
                 # else:
                 #     print("info, upstream path has changed")
             except Exception as e:

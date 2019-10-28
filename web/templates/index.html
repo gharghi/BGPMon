@@ -19,6 +19,12 @@
         }
     </style>
     <script>
+        function updateP() {
+            var elapsed = $('#elapsed');
+            elapsed.text(parseInt(elapsed.text()) + 1)
+        }
+
+        setInterval(updateP, 1000);
         $(document).ready(function () {
             function convertDate(t) {
                 var dt = new Date(t * 1000);
@@ -29,6 +35,7 @@
                 var m = "0" + dt.getMinutes();
                 return yr + '-' + mt + '-' + dy + ' ' + hr + ':' + m.substr(-2);
             }
+
             var data = [];
             {% for obj in output.notif_history %}
                 data.push({'date': convertDate({{obj.time}}), 'count':{{ obj.count }}});
@@ -37,29 +44,6 @@
         });
     </script>
     <div class="content-wrapper">
-    {% if output.notif_history %}
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-flat">
-                    <div class="panel-heading">
-                        <h6 class="panel-title text-semibold"> {% trans 'History of notifications for your resources' %}
-                            <a
-                                    class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-                        <div class="heading-elements">
-                            <ul class="icons-list">
-                                <li><a data-action="collapse"></a></li>
-                                <li><a data-action="reload"></a></li>
-                                <li><a data-action="close"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="panel-body" id="chart" style="width: 1000px;">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {% endif %}
         <div class="row">
             <div class="col-md-6">
                 <div class="panel panel-flat">
@@ -82,7 +66,7 @@
             <div class="col-md-6">
                 <div class="panel panel-flat">
                     <div class="panel-heading">
-                        <h6 class="panel-title text-semibold">{% trans 'Number of Prefixes' %}<a
+                        <h6 class="panel-title text-semibold">{% trans 'Time elapsed since last update' %}<a
                                 class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
                         <div class="heading-elements">
                             <ul class="icons-list">
@@ -93,11 +77,36 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <h1>{{ output.prefixes }}</h1>
+                        <h1><span id="elapsed">{{ output.last_update }}</span> Seconds ago</h1>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row" style="width: 900px"></div>
+        {% if output.notif_history %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <h6 class="panel-title text-semibold"> {% trans 'History of notifications for your resources' %}
+                                <a
+                                        class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+                            <div class="heading-elements">
+                                <ul class="icons-list">
+                                    <li><a data-action="collapse"></a></li>
+                                    <li><a data-action="reload"></a></li>
+                                    <li><a data-action="close"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="panel-body" id="chart" style="width: 1000px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+
         <div class="row">
             <div class="col-md-6">
                 <div class="panel panel-flat">
@@ -118,6 +127,22 @@
                 </div>
             </div>
             <div class="col-md-6">
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h6 class="panel-title text-semibold">{% trans 'Number of Prefixes' %}<a
+                                class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a data-action="collapse"></a></li>
+                                <li><a data-action="reload"></a></li>
+                                <li><a data-action="close"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <h1>{{ output.prefixes }}</h1>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

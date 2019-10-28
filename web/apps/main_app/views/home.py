@@ -1,6 +1,8 @@
+import time
 from django.db.models import Count
 from django.shortcuts import render, redirect
-from web.apps.main_app.models import Asn, Prefix, Notifications
+from web.apps.main_app.models import Asn, Prefix, Notifications, Stats
+
 
 # @is_user_in_group('Customers')  # for authorization with group name
 def home(request):
@@ -8,10 +10,12 @@ def home(request):
     prefixes = Prefix.objects.filter(user= request.user).count()
     notifications = Notifications.objects.filter(user=request.user).count()
     notif_history = Notifications.objects.filter(user=request.user).values('time').annotate(count=Count('id'))
+    stats = Stats.objects.values_list('update_time', flat=True).last()
     output = {
         'asns': asns,
         'prefixes': prefixes,
         'notifications': notifications,
-        'notif_history': notif_history
+        'notif_history': notif_history,
+        'last_update':int(time.time() - stats)
     }
     return render(request, 'index.html', {'output': output})

@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.db import connection
 
-from web.apps.main_app.models import Asn, Prefix
+from web.apps.main_app.models import Asn, Prefix, Dump, Stats
 
 # Makes the AS Path unique by duplicate sequence ASNs
 def unique_path(path):
@@ -15,6 +15,13 @@ def unique_path(path):
         if path[i] != path[i-1]:
             unique.append(path[i])
     return ' '.join(unique)
+
+def statistics(data):
+    Stats.objects.create(
+        update_time=data['update_time'],
+        update_count=data['update_count'],
+        matched_count=data['matched_count']
+    )
 
 def insert_notifications(notification):
     cs = connection.cursor()
@@ -57,9 +64,12 @@ class Command(BaseCommand):
     help = 'fetches updates from RIS servers'
 
     def handle(self, *args, **kwargs):
+        stats = {}
         # Creating list of updates
         cs = connection.cursor()
         os.system('/bin/bash ' + settings.BASE_DIR + '/apps/backend/management/commands/import_updates.sh')
+        stats['update_time'] = os.path.getmtime(settings.BASE_DIR + '/apps/backend/tmp/latest-update.gz')
+        stats['update_count'] = Dump.objects.all().count()
         # searching announced prefixes in our database
         updates = []
         query = "select prefix.prefix, dump.asn, dump.path, dump.time, dump.prefix from main_app_prefix as prefix inner join " \
@@ -67,6 +77,7 @@ class Command(BaseCommand):
                 "dump.asn, dump.path"
         cs.execute(query)
         rows = cs.fetchall()
+        stats['matched_count'] = len(rows)
         for item in rows:
             updates.append({'prefix': item[4], 'asn': item[1], 'path': item[2], 'time': item[3]})
 
@@ -151,5 +162,7 @@ class Command(BaseCommand):
                 #     print("info, upstream path has changed")
             except Exception as e:
                 print(e)
+
+        statistics(stats)
         # run the send mail command
 

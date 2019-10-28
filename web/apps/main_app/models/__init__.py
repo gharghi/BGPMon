@@ -6,3 +6,4 @@ from .neighbors import Neighbors
 from .origins import Origins
 from .notifications import Notifications
 from .notification_rule import NotificationRule
+from .stats import Stats

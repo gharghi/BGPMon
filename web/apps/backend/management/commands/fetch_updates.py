@@ -67,7 +67,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         stats = {}
-        start_time = time.time
+        start_time = time.time()
         # Creating list of updates
         cs = connection.cursor()
         os.system('/bin/bash ' + settings.BASE_DIR + '/apps/backend/management/commands/import_updates.sh')
@@ -165,8 +165,8 @@ class Command(BaseCommand):
                 #     print("info, upstream path has changed")
             except Exception as e:
                 print(e)
-        end_time = time.time
-        stats['duration'] = str(round((end_time - start_time) * 1000000, 1))
+        end_time = time.time()
+        stats['duration'] = round((end_time - start_time) * 1000)
         statistics(stats)
         # run the send mail command
 

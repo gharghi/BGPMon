@@ -1,6 +1,7 @@
 import os
 import sys
 
+import time
 from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.db import connection
@@ -20,7 +21,8 @@ def statistics(data):
     Stats.objects.create(
         update_time=data['update_time'],
         update_count=data['update_count'],
-        matched_count=data['matched_count']
+        matched_count=data['matched_count'],
+        duration=data['duration']
     )
 
 def insert_notifications(notification):
@@ -65,6 +67,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         stats = {}
+        start_time = time.time
         # Creating list of updates
         cs = connection.cursor()
         os.system('/bin/bash ' + settings.BASE_DIR + '/apps/backend/management/commands/import_updates.sh')
@@ -162,7 +165,8 @@ class Command(BaseCommand):
                 #     print("info, upstream path has changed")
             except Exception as e:
                 print(e)
-
+        end_time = time.time
+        stats['duration'] = str(round((end_time - start_time) * 1000000, 1))
         statistics(stats)
         # run the send mail command
 

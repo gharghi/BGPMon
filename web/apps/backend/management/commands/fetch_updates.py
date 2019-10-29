@@ -3,6 +3,7 @@ import sys
 
 import time
 from django.conf import settings
+from django.core.management import call_command
 from django.core.management.base import BaseCommand
 from django.db import connection
 
@@ -175,4 +176,5 @@ class Command(BaseCommand):
         end_time = time.time()
         stats['duration'] = round((end_time - start_time) * 1000)
         statistics(stats)
-        os.system('/usr/bin/python3 ../' + settings.BASE_DIR + 'manage.py send_mail')
+        # os.system('/usr/bin/python3 ../' + settings.BASE_DIR + 'manage.py send_mail')
+        call_command('send_mail')

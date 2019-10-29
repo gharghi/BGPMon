@@ -175,5 +175,4 @@ class Command(BaseCommand):
         end_time = time.time()
         stats['duration'] = round((end_time - start_time) * 1000)
         statistics(stats)
-        # run the send mail command
-
+        os.system('/usr/bin/python3 ../' + settings.BASE_DIR + 'manage.py send_mail')

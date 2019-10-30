@@ -148,14 +148,6 @@ class Command(BaseCommand):
 
                     # Checking if right ASNs are in database as right hand
                     # right = path[0]
-                query = "select neighbors.neighbor as right_neighbor, asn.asn as asn, asn.user_id as user from main_app_neighbors as neighbors inner join main_app_asn as asn on neighbors.asn_id = asn.id where asn.asn = " + \
-                        asn + " and neighbors.type = 2 and neighbors.neighbor = " + downstream
-                cs.execute(query)
-                if not cs.rowcount:
-                    notification = {'path': update['path'], 'time': update['time'], 'asn': path[0],
-                                    'prefix': prefix,
-                                    'type': 3}
-                    print("error, is transiting ", insert_notifications(notification))
 
                 if path_index is 0:
                     # Checking if ASN is advertising prefix that is not in database
@@ -166,6 +158,27 @@ class Command(BaseCommand):
                         notification = {'path': update['path'], 'time': update['time'], 'asn': asn, 'prefix': prefix,
                                         'type': 4}
                         print("error, is hijacking ", insert_notifications(notification))
+                    continue
+
+
+                query = "select neighbors.neighbor as right_neighbor, asn.asn as asn, asn.user_id as user from main_app_neighbors as neighbors inner join main_app_asn as asn on neighbors.asn_id = asn.id where asn.asn = " + \
+                        asn + " and neighbors.type = 2 and neighbors.neighbor = " + downstream
+                cs.execute(query)
+                if not cs.rowcount:
+                    notification = {'path': update['path'], 'time': update['time'], 'asn': path[0],
+                                    'prefix': prefix,
+                                    'type': 3}
+                    print("error, is transiting ", insert_notifications(notification))
+
+                # if path_index is 0:
+                #     # Checking if ASN is advertising prefix that is not in database
+                #     prefix_net = update['prefix'].split('/')[0]
+                #     query = "select prefix.prefix as prefix, origins.origin as origin, prefix.user_id as user from main_app_prefix as prefix inner join main_app_origins as origins on origins.prefix_id = prefix.id where prefix.network <= INET6_ATON(\"" + prefix_net + "\") and prefix.broadcast >= INET6_ATON(\"" + prefix_net + "\") and origins.origin = " + str(asn)
+                #     cs.execute(query)
+                #     if not cs.rowcount:
+                #         notification = {'path': update['path'], 'time': update['time'], 'asn': asn, 'prefix': prefix,
+                #                         'type': 4}
+                #         print("error, is hijacking ", insert_notifications(notification))
 
                 # elif path.index(asn) is 1:
 

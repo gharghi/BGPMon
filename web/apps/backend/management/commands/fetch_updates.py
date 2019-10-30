@@ -149,7 +149,7 @@ class Command(BaseCommand):
                     # Checking if right ASNs are in database as right hand
                     # right = path[0]
                 query = "select neighbors.neighbor as right_neighbor, asn.asn as asn, asn.user_id as user from main_app_neighbors as neighbors inner join main_app_asn as asn on neighbors.asn_id = asn.id where asn.asn = " + \
-                        path[1] + " and neighbors.type = 2 and neighbors.neighbor = " + downstream
+                        asn + " and neighbors.type = 2 and neighbors.neighbor = " + downstream
                 cs.execute(query)
                 if not cs.rowcount:
                     notification = {'path': update['path'], 'time': update['time'], 'asn': path[0],

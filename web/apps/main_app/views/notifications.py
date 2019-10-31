@@ -14,7 +14,7 @@ def view_notifications(request):
     # notifications = Notifications.objects.filter(time__range=[startdate, enddate]).filter(
     #     user__id=request.user.id).annotate(pathw = Func(F('path'),'group_concat')).order_by('time').reverse()
     cs = connection.cursor()
-    query = "select id,prefix,asn,type,time,group_concat(path separator \"|\") from main_app_notifications where user_id = " + str(request.user.id) +" group by prefix,asn order by time desc"
+    query = "select id,prefix,asn,type,time,group_concat(path separator \"|\"),status from main_app_notifications where user_id = " + str(request.user.id) +" group by prefix,asn order by time desc"
     cs.execute(query)
     rows = cs.fetchall()
     return render(request, 'notifications/list_notifications.html', {'notifications': rows})

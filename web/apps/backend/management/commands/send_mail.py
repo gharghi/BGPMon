@@ -6,6 +6,10 @@ from django.core.management.base import BaseCommand
 from web.apps.jwt_store.models import User
 from web.apps.main_app.models import Notifications, NotificationRule
 
+def send_telegram(content):
+    url = 'https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s' % (settings.TELEGRAM_BOT_KEY, '-1001425080891', content)
+    requests.get(url, timeout=10)
+
 
 def status(text):
     code = {
@@ -24,9 +28,9 @@ def get_notifications(user):
         # end_date = int(time.time())
         # start_date = end_date - 359
         # notifications = Notifications.objects.filter(Q(user__id=user.id) | Q(time__range=[start_date, end_date]))
-        notifications = Notifications.objects.filter(emailed=0).filter(user__id=user.id).order_by('time').reverse()
-        mail = "BGPMon Alerts\n"
+        notifications = Notifications.objects.filter(emailed=0,user__id=user.id).order_by('-time')
         if notifications.exists():  ##prevent sending empty notification
+            mail = "BGPMon Alerts\n"
             for notification in notifications:
                 if notification.type == 1 and not rule.transited:
                     continue
@@ -36,17 +40,17 @@ def get_notifications(user):
                     continue
                 if notification.type == 4 and not rule.hijacking:
                     continue
-                mail = mail + str(notification.prefix) + '\t\t' + status(notification.type) + '\t\t\t ' + str(
-                    notification.path) + '\n'
+                mail = mail + notification.prefix + '\t\t' + status(notification.type) + '\t\t\t ' + notification.path + '\n'
+
+
 
             if rule.email:
                 email = EmailMessage('BGPMon Alert', mail, to=[rule.email])
-                email.send()
+                if email.send():
+                    notifications.update(emailed=True)
 
-            if rule.telegram:
-                url = 'https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s' % (
-                    settings.TELEGRAM_BOT_KEY, '-1001425080891', mail)
-                requests.get(url, timeout=10)
+            send_telegram(mail)
+
 
 
 class Command(BaseCommand):
@@ -56,5 +60,3 @@ class Command(BaseCommand):
         users = User.objects.all()
         for user in users:
             get_notifications(user)
-        Notifications.objects.all().update(emailed=True)
-        return True

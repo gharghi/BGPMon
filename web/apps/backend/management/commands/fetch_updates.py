@@ -72,7 +72,7 @@ class Command(BaseCommand):
         # Creating list of updates
         cs = connection.cursor()
         os.system('/bin/bash ' + settings.BASE_DIR + '/apps/backend/management/commands/import_updates.sh')
-        stats['update_time'] = os.path.getmtime(settings.BASE_DIR + '/apps/backend/tmp/latest-update.gz')
+        stats['update_time'] = start_time
         stats['update_count'] = Dump.objects.all().count()
         # searching announced prefixes in our database
         updates = []
@@ -189,5 +189,4 @@ class Command(BaseCommand):
         end_time = time.time()
         stats['duration'] = round((end_time - start_time) * 1000)
         statistics(stats)
-        # os.system('/usr/bin/python3 ../' + settings.BASE_DIR + 'manage.py send_mail')
         call_command('send_mail')

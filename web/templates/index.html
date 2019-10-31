@@ -21,7 +21,13 @@
     <script>
         function updateP() {
             var elapsed = $('#elapsed');
-            elapsed.text(parseInt(elapsed.text()) + 1)
+            elapsed.text(parseInt(elapsed.text()) + 1);
+            {#var progress = $('#elapsedProgress');#}
+            {#progress.text((parseInt(elapsed.text()) * 100 / 300) + '%');#}
+            $('#elapsedProgressWidth').width((parseInt(elapsed.text()) * 100 / 300) + '%');
+            if (elapsed.text() == 300){
+                location.reload();
+            }
         }
 
         setInterval(updateP, 1000);
@@ -44,44 +50,97 @@
         });
     </script>
     <div class="content-wrapper">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="panel panel-flat">
-                    <div class="panel-heading">
-                        <h6 class="panel-title text-semibold"> {% trans 'Number of ASNs' %} <a
-                                class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-                        <div class="heading-elements">
-                            <ul class="icons-list">
-                                <li><a data-action="collapse"></a></li>
-                                <li><a data-action="reload"></a></li>
-                                <li><a data-action="close"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <h1>{{ output.asns }}</h1>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="panel panel-flat">
-                    <div class="panel-heading">
-                        <h6 class="panel-title text-semibold">{% trans 'Time elapsed since last update' %}<a
-                                class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-                        <div class="heading-elements">
-                            <ul class="icons-list">
-                                <li><a data-action="collapse"></a></li>
-                                <li><a data-action="reload"></a></li>
-                                <li><a data-action="close"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <h1><span id="elapsed">{{ output.last_update }}</span> Seconds ago</h1>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="row">
+        <div class="col-sm-6 col-md-4">
+						<div class="panel panel-body">
+							<div class="media no-margin">
+								<div class="media-body">
+									<h3 class="no-margin text-semibold">{{ output.asns }}</h3>
+									<span class="text-uppercase text-size-mini text-muted">{% trans 'Number of AS Numbers' %}</span>
+								</div>
+
+								<div class="media-right media-middle">
+									<i class="icon-chess-king icon-3x text-blue-400"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+        <div class="col-sm-6 col-md-4">
+						<div class="panel panel-body">
+							<div class="media no-margin">
+								<div class="media-body">
+									<h3 class="no-margin text-semibold">{{ output.notifications }}</h3>
+									<span class="text-uppercase text-size-mini text-muted">{% trans 'Number of AS Numbers' %}</span>
+								</div>
+
+								<div class="media-right media-middle">
+									<i class="icon-alarm icon-3x text-blue-400"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+        <div class="col-sm-6 col-md-4">
+						<div class="panel panel-body">
+							<div class="media no-margin">
+								<div class="media-body">
+									<h3 class="no-margin text-semibold">{{ output.prefixes }}</h3>
+									<span class="text-uppercase text-size-mini text-muted">{% trans 'Number of Prefixes' %}</span>
+								</div>
+
+								<div class="media-right media-middle">
+									<i class="icon-stack icon-3x text-blue-400"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-md-6">
+						<div class="panel panel-body">
+							<div class="media no-margin-top content-group">
+								<div class="media-left media-middle">
+									<i class="icon-pulse2 icon-2x text-success-400 opacity-75"></i>
+								</div>
+
+								<div class="media-body">
+									<h6 class="no-margin text-semibold">{% trans 'Time elapsed since last update' %}</h6>
+									<span class="text-muted">April, 19th</span>
+								</div>
+							</div>
+
+							<div class="progress progress-micro mb-10">
+								<div class="progress-bar bg-success-400" id="elapsedProgressWidth" style="width: 80%">
+									<span class="sr-only" id="elapsedProgress">80% Complete</span>
+								</div>
+							</div>
+			                <span class="pull-right" id="elapsed">{{ output.last_update }}</span>
+			                Seconds
+						</div>
+					</div>
+        <div class="col-sm-6 col-md-6">
+						<div class="panel panel-body bg-success-400 has-bg-image">
+							<div class="media no-margin-top content-group">
+								<div class="media-left media-middle">
+									<i class="icon-cog3 icon-2x"></i>
+								</div>
+
+								<div class="media-body">
+									<h6 class="no-margin text-semibold">Server maintenance</h6>
+									<span class="text-muted">Until 1st of June</span>
+								</div>
+							</div>
+
+							<div class="progress progress-micro mb-10 bg-success">
+								<div class="progress-bar bg-white" style="width: 67%">
+									<span class="sr-only">67% Complete</span>
+								</div>
+							</div>
+			                <span class="pull-right">67%</span>
+			                Re-indexing
+						</div>
+					</div>
+    </div>
+
         <div class="row" style="width: 900px"></div>
         {% if output.notif_history %}
             <div class="row">
@@ -107,43 +166,6 @@
         {% endif %}
 
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="panel panel-flat">
-                    <div class="panel-heading">
-                        <h6 class="panel-title text-semibold">{% trans 'Number of Notifications' %}<a
-                                class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-                        <div class="heading-elements">
-                            <ul class="icons-list">
-                                <li><a data-action="collapse"></a></li>
-                                <li><a data-action="reload"></a></li>
-                                <li><a data-action="close"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <h1>{{ output.notifications }}</h1>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="panel panel-flat">
-                    <div class="panel-heading">
-                        <h6 class="panel-title text-semibold">{% trans 'Number of Prefixes' %}<a
-                                class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-                        <div class="heading-elements">
-                            <ul class="icons-list">
-                                <li><a data-action="collapse"></a></li>
-                                <li><a data-action="reload"></a></li>
-                                <li><a data-action="close"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <h1>{{ output.prefixes }}</h1>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 {% endblock content %}

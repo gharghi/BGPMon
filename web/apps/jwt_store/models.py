@@ -18,3 +18,11 @@ class User(AbstractUser):
 
     def get_session_auth_hash(self):
         return 'oidc'
+
+
+class Group(Group):
+    asn = models.IntegerField(default=0)
+    prefix = models.IntegerField(default=0)
+
+
+

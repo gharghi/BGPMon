@@ -1,6 +1,7 @@
 from django.contrib.auth import login
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from web.apps.jwt_store.models import User
+from web.apps.jwt_store.models import User, Group
 from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect
 from django.utils.encoding import force_bytes, force_text
@@ -65,6 +66,7 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.email_confirmed = True
+        user.groups = Group.objects.get(name=settings.DEFAULT_GROUP_NAME)
         user.save()
         # login(request, user)
         messages.success(request, _('Your Account has been activated. Please login to continue.'))

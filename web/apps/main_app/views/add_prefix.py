@@ -11,10 +11,12 @@ from django.contrib.auth.decorators import login_required
 from web.apps.main_app.models import Prefix, Origins
 from django.utils.translation import gettext as _
 import socket
-import pandas as pd
+from web.apps.main_app.views.limits import user_limit
 
 
 # @is_user_in_group('Customers')  # for authorization with group name
+
+
 def add_prefix(request):
     # prefixes = prefix.Prefix.objects.all()
     return render(request, 'add_prefix/add_prefix.html')
@@ -78,6 +80,10 @@ class CreatePrefix(TemplateView):
         try:
             if not request.POST['prefix']:
                 messages.error(request, _('Please enter a valid prefix'))
+                return HttpResponseRedirect("/prefix/")
+
+            if Prefix.objects.filter(user=request.user).count() >= user_limit(request)['prefix']:
+                messages.error(request, 'You have reached your '+ str(user_limit(request)['prefix']) +' prefix limit.\n Please update your subscription to premium to add more prefixes.')
                 return HttpResponseRedirect("/prefix/")
 
             form = AddPrefixForm(request.POST)

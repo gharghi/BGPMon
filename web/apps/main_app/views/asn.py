@@ -12,6 +12,9 @@ from web.apps.main_app.models import Asn, Neighbors
 
 
 # @is_user_in_group('Customers')  # for authorization with group name
+from web.apps.main_app.views.limits import user_limit
+
+
 def asn(request):
     return render(request, 'asn/asn.html')
 
@@ -27,10 +30,13 @@ class AddAsn(TemplateView):
                 messages.warning(request, _('Please enter a valid AS Number'))
                 return HttpResponseRedirect("/asn/")
 
-            username = request.user
+            if Asn.objects.filter(user=request.user).count() >= user_limit(request)['asn']:
+                messages.error(request, 'You have reached your '+ str(user_limit(request)['asn']) +' AS Number limit.\n Please update your subscription to premium to add more AS Numbers.')
+                return HttpResponseRedirect("/asn/")
+
             form = AddAsnForm(request.POST)
             if form.is_valid():
-                form.instance.user = username
+                form.instance.user = request.user
                 form.instance.save()
                 messages.success(request, _('AS Number added successfully'))
                 return HttpResponseRedirect("/asn/")

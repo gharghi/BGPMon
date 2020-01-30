@@ -1,5 +1,4 @@
 from django.db import models
-
 from web.apps.jwt_store.models import User
 
 

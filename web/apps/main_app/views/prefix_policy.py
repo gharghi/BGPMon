@@ -1,12 +1,12 @@
+from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.views.generic import TemplateView
 from django.shortcuts import render, get_object_or_404
-from web.apps.main_app.models import Origins, Prefix
+from django.utils.translation import gettext as _
+from django.views.generic import TemplateView
+
 from web.apps.jwt_store.models import User
 from web.apps.main_app.forms import AddOriginsForm
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.utils.translation import gettext as _
+from web.apps.main_app.models import Origins, Prefix
 
 
 def asn(request):
@@ -14,11 +14,6 @@ def asn(request):
 
 
 class MakePrefixPolicy(TemplateView):
-
-    # def get(self, request, *args, **kwargs):
-    #     origins = Origins.objects.filter(prefix__user__id=request.user.id)
-    #     prefix = Prefix.objects.filter(user__id=request.user.id)
-    #     return render(request, 'add_prefix/list_origins.html', {'origins': origins, 'prefix': prefix})
 
     def post(self, request, *args, **kwargs):
         try:

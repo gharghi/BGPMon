@@ -1,20 +1,18 @@
-from django.contrib.auth import login
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from web.apps.jwt_store.models import User, Group
 from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.template.loader import render_to_string
-from django.contrib import messages
 from django.utils.translation import gettext as _
 
+from web.apps.jwt_store.models import User, Group
 from web.apps.main_app.forms.sign_up_form import SignUpForm
 from web.apps.main_app.tokens.tokens import account_activation_token
 
 
-@login_required
 def home(request):
     return render(request, 'registration/login.html')
 
@@ -40,20 +38,18 @@ def signup(request):
                     'token': account_activation_token.make_token(user),
                 })
                 user.email_user(subject, message)
-                messages.success(request,_('Account activation sent. Please check your email for confirmation link.'))
+                messages.success(request, _('Account activation sent. Please check your email for confirmation link.'))
                 return redirect('login')
             else:
                 messages.error(request, form.errors)
                 return redirect('login')
         except Exception as e:
-            messages.error(request,e)
+            messages.error(request, e)
             return redirect('login')
 
     else:
-        # return redirect('login/')
         form = SignUpForm()
         return render(request, 'registration/login.html', {'form': form})
-
 
 
 def activate(request, uidb64, token):
@@ -68,7 +64,6 @@ def activate(request, uidb64, token):
         user.email_confirmed = True
         user.groups = Group.objects.get(name=settings.DEFAULT_GROUP_NAME)
         user.save()
-        # login(request, user)
         messages.success(request, _('Your Account has been activated. Please login to continue.'))
         return redirect('login')
     else:

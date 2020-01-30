@@ -9,9 +9,6 @@ from django.views.generic import TemplateView
 
 from web.apps.main_app.forms import AddAsnForm
 from web.apps.main_app.models import Asn, Neighbors
-
-
-# @is_user_in_group('Customers')  # for authorization with group name
 from web.apps.main_app.views.limits import user_limit
 
 
@@ -31,7 +28,8 @@ class AddAsn(TemplateView):
                 return HttpResponseRedirect("/asn/")
 
             if Asn.objects.filter(user=request.user).count() >= user_limit(request)['asn']:
-                messages.error(request, 'You have reached your '+ str(user_limit(request)['asn']) +' AS Number limit.\n Please update your subscription to premium to add more AS Numbers.')
+                messages.error(request, 'You have reached your ' + str(user_limit(request)[
+                                                                           'asn']) + ' AS Number limit.\n Please update your subscription to premium to add more AS Numbers.')
                 return HttpResponseRedirect("/asn/")
 
             form = AddAsnForm(request.POST)
@@ -59,11 +57,14 @@ def delete_asn(request, asn):
 
 def asn_make_policy(request, asn):
     saved_neighbors = {}
-    saved_neighbors['left'] = Neighbors.objects.filter(asn__user__id=request.user.id, asn__asn=asn, type=1).distinct().values_list('neighbor', flat=True)
-    saved_neighbors['right'] = Neighbors.objects.filter(asn__user__id=request.user.id, asn__asn=asn, type=2).distinct().values_list('neighbor', flat=True)
+    saved_neighbors['left'] = Neighbors.objects.filter(asn__user__id=request.user.id, asn__asn=asn,
+                                                       type=1).distinct().values_list('neighbor', flat=True)
+    saved_neighbors['right'] = Neighbors.objects.filter(asn__user__id=request.user.id, asn__asn=asn,
+                                                        type=2).distinct().values_list('neighbor', flat=True)
     asn_object = Asn.objects.filter(asn=asn, user_id=request.user.id).values('id', 'asn')
     neighbors = find_neighbors(asn, request)
-    return render(request, 'asn/neighbors.html', {'neighbors': neighbors, 'saved_neighbors': saved_neighbors, 'asn': asn_object.values()[0]})
+    return render(request, 'asn/neighbors.html',
+                  {'neighbors': neighbors, 'saved_neighbors': saved_neighbors, 'asn': asn_object.values()[0]})
 
 
 # fetch list of right and left neighbors of ASN

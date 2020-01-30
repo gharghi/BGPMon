@@ -1,0 +1,6 @@
+django
+django-admin
+mysqlclient
+netaddr
+six
+pyjwt

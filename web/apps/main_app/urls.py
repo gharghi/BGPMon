@@ -1,22 +1,18 @@
-from django.urls import path
 from django.conf.urls import url
+from django.contrib.auth.decorators import login_required
+from django.urls import path
 
 from web.apps.main_app.views.profile.change_password import change_password
 from web.apps.main_app.views.profile.edit import EditProfile
-from .views.home import home
 from .views.add_prefix import CreatePrefix, MakePolicy, delete_prefix, prefix_make_policy, AddPrefixPolicy
-from .views.prefix_policy import MakePrefixPolicy, list_origins, delete_origin
 from .views.asn import AddAsn, delete_asn, asn_make_policy
 from .views.asn_policy import MakeAsnPolicy, list_neighbors, delete_neighbors, list_prefixes
-from .views.signup import signup, activate
-from .views.notifications import view_notifications
-from .views.notification_rules import AddNotificationRule
 from .views.fix_notification import fix_notification
-from .views.setting import Setting
-from django.contrib.auth.decorators import login_required
-
-from django.urls import path
-from .views.setting import ChangeLanguage
+from .views.home import home
+from .views.notification_rules import AddNotificationRule
+from .views.notifications import view_notifications
+from .views.prefix_policy import MakePrefixPolicy, list_origins, delete_origin
+from .views.signup import signup, activate
 
 urlpatterns = [
     path('', login_required(home), name='home'),
@@ -48,9 +44,4 @@ urlpatterns = [
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         activate, name='activate'),
 
-
 ]
-
-
-
-

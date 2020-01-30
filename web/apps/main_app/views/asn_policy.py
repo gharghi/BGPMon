@@ -1,15 +1,15 @@
 import json
 import urllib
 
+from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.views.generic import TemplateView
 from django.shortcuts import render, get_object_or_404
-from web.apps.main_app.models import Neighbors, Asn, Prefix, Origins
+from django.utils.translation import gettext as _
+from django.views.generic import TemplateView
+
 from web.apps.jwt_store.models import User
 from web.apps.main_app.forms import AddNeighborsForm
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.utils.translation import gettext as _
+from web.apps.main_app.models import Neighbors, Asn, Prefix
 
 
 def asn(request):
@@ -42,7 +42,7 @@ class MakeAsnPolicy(TemplateView):
                         form.instance.type = 2
                         form.instance.save()
                 messages.success(request, _('Neighbors have registered successfully'))
-                return HttpResponseRedirect("/asn/" + str(asn) +"/neighbors/")
+                return HttpResponseRedirect("/asn/" + str(asn) + "/neighbors/")
 
             else:
                 messages.error(request, form.errors)
@@ -50,15 +50,16 @@ class MakeAsnPolicy(TemplateView):
 
         except Exception as e:
             messages.error(request, e)
-            return HttpResponseRedirect("/asn/" + asn[0] +"/neighbors/")
-
+            return HttpResponseRedirect("/asn/" + asn[0] + "/neighbors/")
 
 
 def list_neighbors(request, asn):
     neighbors = {}
     neighbors['asn'] = asn
-    neighbors['left'] = Neighbors.objects.filter(asn__user__id=request.user.id, asn__asn= asn, type= 1).distinct().values('id', 'neighbor')
-    neighbors['right'] = Neighbors.objects.filter(asn__user__id=request.user.id, asn__asn= asn, type = 2).distinct().values('id', 'neighbor')
+    neighbors['left'] = Neighbors.objects.filter(asn__user__id=request.user.id, asn__asn=asn, type=1).distinct().values(
+        'id', 'neighbor')
+    neighbors['right'] = Neighbors.objects.filter(asn__user__id=request.user.id, asn__asn=asn,
+                                                  type=2).distinct().values('id', 'neighbor')
     return render(request, 'asn/list_neighbors.html', {'neighbors': neighbors})
 
 
@@ -71,7 +72,7 @@ def delete_neighbors(request, id):
     if request.user.is_authenticated and request.user == creator[0]:
         neighbor_object.delete()
         messages.success(request, _("Neighbor deleted successfully"))
-        return HttpResponseRedirect("/asn/" + str(asn_num) +"/neighbors/")
+        return HttpResponseRedirect("/asn/" + str(asn_num) + "/neighbors/")
 
     else:
         messages.success(request, _("There is an error"))
@@ -80,7 +81,7 @@ def delete_neighbors(request, id):
 
 def list_prefixes(request, asn):
     link = "http://stat.ripe.net/data/announced-prefixes/data.json?resource=" + str(asn)
-    saved_prefixes = Prefix.objects.filter(origins__origin=asn, user=request.user).values_list('prefix', flat= True)
+    saved_prefixes = Prefix.objects.filter(origins__origin=asn, user=request.user).values_list('prefix', flat=True)
     prefixes = []
     try:
         with urllib.request.urlopen(link, timeout=10) as url:
@@ -93,4 +94,5 @@ def list_prefixes(request, asn):
     for object in data["data"]["prefixes"]:
         prefixes.append(object['prefix'])
 
-    return render(request, 'asn/list_prefixes.html', {'asn':asn, 'prefixes': prefixes, 'saved_prefixes': saved_prefixes})
+    return render(request, 'asn/list_prefixes.html',
+                  {'asn': asn, 'prefixes': prefixes, 'saved_prefixes': saved_prefixes})

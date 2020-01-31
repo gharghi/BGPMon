@@ -22,9 +22,9 @@ class UserAdmin(admin.ModelAdmin):
     def prefix_count(self, obj):
         return obj._prefix_count
 
-    # Count number of Notifications
-    def notifications_count(self, obj):
-        return obj._notifications_count
+    # # Count number of Notifications
+    # def notifications_count(self, obj):
+    #     return obj._notifications_count
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -34,9 +34,9 @@ class UserAdmin(admin.ModelAdmin):
         queryset = queryset.annotate(
             _prefix_count=Count("prefix", distinct=True),
         )
-        queryset = queryset.annotate(
-            _notifications_count=Count("notifications", distinct=True),
-        )
+        # queryset = queryset.annotate(
+        #     _notifications_count=Count("notifications", distinct=True),
+        # )
         return queryset
 
 

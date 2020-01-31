@@ -12,7 +12,7 @@ admin.site.register(Group)
 # Define the admin class
 class UserAdmin(admin.ModelAdmin):
     list_display = (
-        'username', 'email_confirmed', 'groups', 'email', 'asn_count', 'prefix_count')
+        'username', 'email_confirmed', 'groups', 'email', 'asn_count', 'prefix_count', 'last_login')
 
     # Count number of registered ASNs
     def asn_count(self, obj):

@@ -11,11 +11,11 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
 import os
+
 from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
@@ -26,8 +26,7 @@ TELEGRAM_BOT_KEY = '88816MSqiT5SUFaSmbtF_H7UCpCg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['bgpmonitor.net','127.0.0.1']
-
+ALLOWED_HOSTS = ['bgpmonitor.net', '127.0.0.1']
 
 # Application definition
 
@@ -75,7 +74,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'web.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
@@ -84,12 +82,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bgpmon',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': '0300301',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
@@ -108,7 +105,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
@@ -141,15 +137,22 @@ JWT_SECRET = 'as;ao%%'
 SESSION_COOKIE_SAMESITE = 'strict'
 AUTH_USER_MODEL = 'jwt_store.User'
 
-
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'i@gmail.com'
+# EMAIL_HOST_PASSWORD = ''
+# EMAIL_PORT = 587
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'i@gmail.com'
-EMAIL_HOST_PASSWORD = ''
-EMAIL_PORT = 587
+EMAIL_HOST = 'bgpmonitor.net'
+EMAIL_HOST_USER = 'notification@bgpmonitor.net'
+EMAIL_PORT = 25
+DEFAULT_FROM_EMAIL= 'notification@bgpmonitor.net'
+
 
 LOGIN_URL = '/accounts/login'
 LOGIN_REDIRECT_URL = '/'

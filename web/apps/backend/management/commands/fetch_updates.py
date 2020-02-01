@@ -1,6 +1,5 @@
 import os
 import sys
-
 import time
 from django.conf import settings
 from django.core.management import call_command
@@ -9,14 +8,17 @@ from django.db import connection
 
 from web.apps.main_app.models import Asn, Prefix, Dump, Stats
 
+insert_database = []
+insert_database_hash = []
 # Makes the AS Path unique by duplicate sequence ASNs
 def unique_path(path):
     path = path.split(' ')
     unique = []
     for i in range(len(path)):
-        if path[i] != path[i-1]:
+        if path[i] != path[i - 1]:
             unique.append(path[i])
     return ' '.join(unique)
+
 
 def statistics(data):
     Stats.objects.create(
@@ -25,6 +27,7 @@ def statistics(data):
         matched_count=data['matched_count'],
         duration=data['duration']
     )
+
 
 def insert_notifications(notification):
     cs = connection.cursor()
@@ -54,14 +57,17 @@ def insert_notifications(notification):
                 users.append(path_users)
 
     for user in users:
-        query = "insert into main_app_notifications (user_id, type, path, prefix, asn, time, status, emailed) values ( " + str(
-            user[0]) + " , " + str(notification['type']) + ",\"" + unique_path(notification['path']) + "\",\"" + notification[
-                    'prefix'] + "\"," + str(notification['asn']) + "," + str(notification['time']) + ",0, 0)"
-        cs.execute(query)
-        if cs.rowcount:
-            return True, notification
-        else:
-            return False, 'An error occurred'
+        global insert_database
+        global insert_database_hash
+        update_obj = f"({str(user[0])} , {str(notification['type'])} , \"{unique_path(notification['path'])}\" , \"{notification['prefix']}\" , {str(notification['asn'])} , {str(notification['time'])}, 0, 0),"
+        obj_hash = str(user[0]) + unique_path(notification['path']) + notification['prefix'] + str(notification['asn'])
+        if obj_hash not in insert_database_hash:
+            insert_database.append(update_obj)
+            insert_database_hash.append(obj_hash)
+
+        return True
+
+
 
 class Command(BaseCommand):
     help = 'fetches updates from RIS servers'
@@ -98,7 +104,8 @@ class Command(BaseCommand):
                     rows = cs.fetchall()
                     for row in rows:
                         prefix_id = row[0]
-                        query = "select id from main_app_origins where prefix_id = " + str(prefix_id) + " and origin = " + str(asn)
+                        query = "select id from main_app_origins where prefix_id = " + str(
+                            prefix_id) + " and origin = " + str(asn)
                         cs.execute(query)
                         if cs.rowcount:
                             flag = 0
@@ -110,7 +117,7 @@ class Command(BaseCommand):
                         notification = {'path': update['path'], 'time': update['time'], 'asn': asn,
                                         'prefix': update['prefix'],
                                         'type': 2}
-                        print("error, has been hijacked ", insert_notifications(notification))
+                        insert_notifications(notification)
             except Exception as e:
                 print(e, 'Error on line {}'.format(sys.exc_info()[-1].tb_lineno))
 
@@ -123,28 +130,32 @@ class Command(BaseCommand):
             rows = cs.fetchall()
         except Exception as e:
             print(e)
-        # print (len(rows))
         for item in rows:
             updates.append({'asn': item[0], 'path': item[1], 'prefix': item[2], 'time': item[3]})
 
         for update in updates:
             asn = str(update['asn'])
-            path = update['path'].split(' ')[::-1]
+            path = update['path'].split(' ')
             ###########unique path##################
             prefix = update['prefix']
             path_index = path.index(asn)
-            upstream = path[path_index + 1]
-            downstream = path[path_index - 1]
+            if path_index == 0:
+                upstream = path[path_index + 1]
+                downstream = None
+            else:
+                upstream = path[path_index + 1]
+                downstream = path[path_index - 1]
+            path = path[::-1]
             try:
                 # if path.index(asn) is 0:
-                    # Checking if upstream provider is in left asns in database
-                    # upstream = path[1]
+                # Checking if upstream provider is in left asns in database
+                # upstream = path[1]
                 query = "select neighbors.neighbor, asn.asn as asn, asn.id as asn_id, asn.user_id as user from main_app_neighbors as neighbors inner join main_app_asn as asn on neighbors.asn_id = asn.id where asn.asn = " + asn + " and neighbors.type = 1 and neighbors.neighbor = " + upstream
                 cs.execute(query)
                 if not cs.rowcount:
                     notification = {'path': update['path'], 'time': update['time'], 'asn': asn, 'prefix': prefix,
                                     'type': 1}
-                    print("error, has been transited ", insert_notifications(notification))
+                    insert_notifications(notification)
 
                     # Checking if right ASNs are in database as right hand
                     # right = path[0]
@@ -152,14 +163,14 @@ class Command(BaseCommand):
                 if path_index is 0:
                     # Checking if ASN is advertising prefix that is not in database
                     prefix_net = update['prefix'].split('/')[0]
-                    query = "select prefix.prefix as prefix, origins.origin as origin, prefix.user_id as user from main_app_prefix as prefix inner join main_app_origins as origins on origins.prefix_id = prefix.id where prefix.network <= INET6_ATON(\"" + prefix_net + "\") and prefix.broadcast >= INET6_ATON(\"" + prefix_net + "\") and origins.origin = " + str(asn)
+                    query = "select prefix.prefix as prefix, origins.origin as origin, prefix.user_id as user from main_app_prefix as prefix inner join main_app_origins as origins on origins.prefix_id = prefix.id where prefix.network <= INET6_ATON(\"" + prefix_net + "\") and prefix.broadcast >= INET6_ATON(\"" + prefix_net + "\") and origins.origin = " + str(
+                        asn)
                     cs.execute(query)
                     if not cs.rowcount:
                         notification = {'path': update['path'], 'time': update['time'], 'asn': asn, 'prefix': prefix,
                                         'type': 4}
-                        print("error, is hijacking ", insert_notifications(notification))
+                        insert_notifications(notification)
                     continue
-
 
                 query = "select neighbors.neighbor as right_neighbor, asn.asn as asn, asn.user_id as user from main_app_neighbors as neighbors inner join main_app_asn as asn on neighbors.asn_id = asn.id where asn.asn = " + \
                         asn + " and neighbors.type = 2 and neighbors.neighbor = " + downstream
@@ -168,24 +179,21 @@ class Command(BaseCommand):
                     notification = {'path': update['path'], 'time': update['time'], 'asn': path[0],
                                     'prefix': prefix,
                                     'type': 3}
-                    print("error, is transiting ", insert_notifications(notification))
+                    insert_notifications(notification)
 
-                # if path_index is 0:
-                #     # Checking if ASN is advertising prefix that is not in database
-                #     prefix_net = update['prefix'].split('/')[0]
-                #     query = "select prefix.prefix as prefix, origins.origin as origin, prefix.user_id as user from main_app_prefix as prefix inner join main_app_origins as origins on origins.prefix_id = prefix.id where prefix.network <= INET6_ATON(\"" + prefix_net + "\") and prefix.broadcast >= INET6_ATON(\"" + prefix_net + "\") and origins.origin = " + str(asn)
-                #     cs.execute(query)
-                #     if not cs.rowcount:
-                #         notification = {'path': update['path'], 'time': update['time'], 'asn': asn, 'prefix': prefix,
-                #                         'type': 4}
-                #         print("error, is hijacking ", insert_notifications(notification))
-
-                # elif path.index(asn) is 1:
-
-                # else:
-                #     print("info, upstream path has changed")
             except Exception as e:
                 print(e)
+        try:
+            query = "insert into main_app_notifications (user_id, type, path, prefix, asn, time, status, emailed) values "
+            for value in insert_database:
+                query = query + value
+            query = query[:-1]
+            cs.execute(query)
+            if cs.rowcount:
+                print("Notifications saved into Database")
+        except Exception as e:
+            print(e)
+
         end_time = time.time()
         stats['duration'] = round((end_time - start_time) * 1000)
         statistics(stats)

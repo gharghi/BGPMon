@@ -21,12 +21,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'eukt=xaw_&#$!8wzmqmct*y08o6)=$(2$ydxdqr9$u'
-TELEGRAM_BOT_KEY = '88816MSqiT5SUFaSmbtF_H7UCpCg'
+SECRET_KEY = 'eukt=xaw_&#$!8ydxdqr9$u'
+TELEGRAM_BOT_KEY = '8881UCpCg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['bgpmonitor.net', '127.0.0.1']
+ALLOWED_HOSTS = ['example.com', '127.0.0.1']
 
 # Application definition
 
@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bgpmon',
         'USER': 'root',
-        'PASSWORD': '0300301',
+        'PASSWORD': '',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -133,7 +133,7 @@ SESSION_COOKIE_NAME = 'BGPMon'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_SAVE_EVERY_REQUEST = True
 SESSION_COOKIE_AGE = 30 * 60
-JWT_SECRET = 'as;ao%%'
+JWT_SECRET = 'aksdnk&&sh3'
 SESSION_COOKIE_SAMESITE = 'strict'
 AUTH_USER_MODEL = 'jwt_store.User'
 
@@ -148,10 +148,10 @@ AUTH_USER_MODEL = 'jwt_store.User'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'bgpmonitor.net'
-EMAIL_HOST_USER = 'notification@bgpmonitor.net'
+EMAIL_HOST = 'example.com'
+EMAIL_HOST_USER = 'notification@example.com'
 EMAIL_PORT = 25
-DEFAULT_FROM_EMAIL= 'notification@bgpmonitor.net'
+DEFAULT_FROM_EMAIL= 'notification@example.com'
 
 
 LOGIN_URL = '/accounts/login'

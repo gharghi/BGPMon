@@ -1,0 +1,5 @@
+.idea
+web/apps/backend/tmp/latest-update.gz
+web/apps/backend/tmp/out.csv
+web/apps/backend/management/commands/import_updates.sh
+static/* linguist-vendored

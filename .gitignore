@@ -1,4 +1,4 @@
-.idea
+.ideas
 web/apps/backend/tmp/latest-update.gz
 web/apps/backend/tmp/out.csv
 web/apps/backend/management/commands/import_updates.sh
@@ -36,3 +36,4 @@ web/apps/main_app/views/profile/__pycache__/
 web/settings/__pycache__/__init__.cpython-38.pyc
 web/settings/__pycache__/production.cpython-38.pyc
 web/static/assets/.DS_Store
+/web/settings/development.py

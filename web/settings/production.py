@@ -17,8 +17,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'eukt=xaw_&#$!8wzmqmct*y08o6)=$(2$ydxdqr9$u'
-TELEGRAM_BOT_KEY = '88816MSqiT5SUFaSmbtF_H7UCpCg'
+SECRET_KEY = 'SECRET_KEY'
+TELEGRAM_BOT_KEY = 'TELEGRAM_BOT_KEY'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -76,9 +76,9 @@ WSGI_APPLICATION = 'web.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bgpmon',
-        'USER': 'root',
-        'PASSWORD': '8162027',
+        'NAME': 'NAME',
+        'USER': 'USER',
+        'PASSWORD': 'PASS',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -129,7 +129,7 @@ SESSION_COOKIE_NAME = 'BGPMon'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_SAVE_EVERY_REQUEST = True
 SESSION_COOKIE_AGE = 30 * 60
-JWT_SECRET = 'as;ao%%'
+JWT_SECRET = 'JWT_SECRET'
 SESSION_COOKIE_SAMESITE = 'strict'
 AUTH_USER_MODEL = 'jwt_store.User'
 
@@ -138,9 +138,9 @@ AUTH_USER_MODEL = 'jwt_store.User'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'bgpmonitor.net'
-EMAIL_HOST_USER = 'notification@bgpmonitor.net'
+EMAIL_HOST_USER = 'EMAIL'
 EMAIL_PORT = 25
-DEFAULT_FROM_EMAIL= 'notification@bgpmonitor.net'
+DEFAULT_FROM_EMAIL= 'EMAIL'
 
 LOGIN_URL = '/accounts/login'
 LOGIN_REDIRECT_URL = '/'

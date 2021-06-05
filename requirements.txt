@@ -1,6 +1,6 @@
 asgiref==3.2.10
 cffi==1.13.2
-cryptography==2.8
+cryptography==3.3.2
 Django==3.2.2
 django-admin==2.0.0
 django-excel-response2==2.0.8

@@ -9,7 +9,7 @@ jwcrypto==0.6.0
 mysqlclient==1.4.6
 netaddr==0.7.19
 pycparser==2.19
-PyJWT==1.7.1
+PyJWT==2.4.0
 python-jwt==3.2.5
 pytz==2019.3
 screen==1.0.1

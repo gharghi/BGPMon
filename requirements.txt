@@ -5,7 +5,7 @@ Django==3.2.2
 django-admin==2.0.0
 django-excel-response2==2.0.8
 django-six==1.0.4
-jwcrypto==0.6.0
+jwcrypto==1.4
 mysqlclient==1.4.6
 netaddr==0.7.19
 pycparser==2.19
